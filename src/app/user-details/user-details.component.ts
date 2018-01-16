@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserManagerService } from '../shared/services/user-manager.service';
 
 @Component({
   selector: 'app-user-details',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserDetailsComponent implements OnInit {
 
-  constructor(private userMgr) { }
+  constructor(private userMgr: UserManagerService) { }
 
   ngOnInit() {
   }
