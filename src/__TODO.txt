@@ -1,0 +1,6 @@
+TODO_list:
+- find a way to strip the bootstrap.min.css
+- translations
+- translations - find a way to dynamically translate error messages
+- language dropdown option to dynamically switch between languages
+

@@ -1,0 +1,14 @@
+<div *ngIf='started'>
+  Performing requested action...
+  <img height="42" width="42" src="assets/images/user/loading.gif" />
+</div>
+<div *ngIf='confirmed'>
+    <div class="alert alert-success">
+      Completing logout...
+    </div>
+</div>
+<div *ngIf='errorMsg !== ""'>
+    <div class="alert alert-error">
+      {{ errorMsg }}
+    </div>
+</div>

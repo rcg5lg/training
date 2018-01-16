@@ -1,0 +1,14 @@
+.navbar-nav .active a {
+    background-color: #0e112b;
+}
+
+.navbar-nav>li>a {
+  line-height: 36px;
+}
+
+.navbar-nav>li>a:hover,
+.navbar-nav>li>a:focus {
+  background-color: #373f85;
+  color: white;
+  text-decoration: underline;
+}

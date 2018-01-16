@@ -1,0 +1,63 @@
+<div class='container'>
+  <form class="user-form" #userForm="ngForm" (ngSubmit)="doLogin(); userForm.form.reset()">
+    <h2>{{title}}</h2>
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username" name="username" required [(ngModel)]="username" #nameInput="ngModel">
+      <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)" class="alert alert-danger">
+        <span *ngIf="nameInput.errors.required">
+          Name is required.
+        </span>
+        <span *ngIf="nameInput.errors.minlength">
+          Name must be at least 4 characters long.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" name="password" required [(ngModel)]="password" #passInput="ngModel">
+      <div *ngIf="passInput.invalid && (passInput.dirty || passInput.touched)" class="alert alert-danger">
+        <span *ngIf="passInput.errors.required">
+          Password is required.
+        </span>
+        <span *ngIf="passInput.errors.minlength">
+          Password must be at least 4 characters long.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirm">Password confirmation</label>
+      <input type="password" class="form-control" id="confirm" name="confirm" required [(ngModel)]="confirm" #confirmInput="ngModel"
+        [appConfirmPassword]="passInput.value" />
+      <div *ngIf="confirmInput.invalid && (confirmInput.dirty || confirmInput.touched)" class="alert alert-danger">
+        <span *ngIf="confirmInput.errors.required">
+          Please confirm the password.
+        </span>
+        <span *ngIf="confirmInput.errors.minlength">
+          Confirmation password must be at least 4 characters long.
+        </span>
+        <span *ngIf="confirmInput.errors.appConfirmPassword">
+          Password not confirmed
+        </span>
+      </div>
+      <div *ngIf="(passInput.value !== confirmInput.value) && passInput.valid && confirmInput.valid" class="alert alert-danger">
+        <span *ngIf="confirmInput.value !== passInput.value">
+          Confirmation password does not match
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="loginError && userForm.pristine" class="alert alert-danger">
+      {{ loginError }}
+    </div>
+    <div *ngIf="welcomeMsg" class="alert alert-success">
+      {{ welcomeMsg }}
+    </div>
+
+    <button type="submit" [disabled]="userForm.form.invalid" class="btn btn-success">Submit</button>
+
+  </form>
+</div>

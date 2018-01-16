@@ -1,0 +1,18 @@
+<ul class="nav navbar-nav navbar-right">
+  <ng-container *ngIf='loggedUser'>
+    <li>
+      <a routerLink="/user-details">Welcome {{ loggedUser.name }}</a>
+    </li>
+    <li>
+      <a routerLink="/logout">Logout</a>
+    </li>
+  </ng-container>
+  <ng-container *ngIf='loggedUser === null'>
+    <li>
+      <a routerLink="/login">Login</a>
+    </li>
+    <li>
+      <a routerLink="/register">Register</a>
+    </li>
+  </ng-container>
+</ul>

@@ -1,0 +1,24 @@
+.navbar {
+    border-radius: 0px;
+}
+
+.navbar-default {
+    background-color: #0e112b;
+    border: 0px;
+    text-align: center;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 66px;
+}
+.navbar-default .navbar-brand .logo-img {
+    display:inline;
+}
+.navbar-default .navbar-brand .logo-title {
+    color:white;
+    font-size: 20px;
+    font-weight: bold;
+}
