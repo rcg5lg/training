@@ -13,8 +13,18 @@ export class UserManagerService {
   public loggedUser$: BehaviorSubject<User>;
   private userAPIUrl = 'http://localhost:81/api/';
 
+  private LocalStorage_UserKey = 'jorj-training-userDetails';
+
   constructor(private http: HttpClient) {
     this.loggedUser = null;
+
+    const storedUser = localStorage.getItem(this.LocalStorage_UserKey);
+    if (storedUser !== '') {
+      this.loggedUser = JSON.parse(storedUser) as User;
+    } else {
+      localStorage.removeItem(this.LocalStorage_UserKey);
+    }
+
     this.loggedUser$ = new BehaviorSubject(this.loggedUser);
   }
 
@@ -23,6 +33,8 @@ export class UserManagerService {
   }
 
   updateLoggedUser(newUser: User) {
+    localStorage.setItem(this.LocalStorage_UserKey, newUser ? (JSON.stringify(newUser)) : '');
+
     this.loggedUser = newUser;
     this.loggedUser$.next(this.loggedUser);
   }
