@@ -1,6 +1,7 @@
 TODO_list:
-- find a way to strip the bootstrap.min.css
-- translations
-- translations - find a way to dynamically translate error messages
-- language dropdown option to dynamically switch between languages
-
+- ma uit cum pot curata bootstrap.min.css pt a lasa doar stilurile folosite
+- traduceri
+- traduceri - mod de a schimba dinamic limba
+- iconita cu tooltip in loc de div cu eroare
+- validari adevarata pe inputurile din formulare
+- nu merge validarea de tip email pt fieldul din register

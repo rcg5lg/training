@@ -107,9 +107,6 @@ export class UserManagerService {
           throw Error('Invalid data');
         }
 
-        console.log('---- DELETE _-- ');
-        console.log(response);
-
         return userData;
       })
       .catch((err) => {
