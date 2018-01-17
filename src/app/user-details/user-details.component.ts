@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+// services
 import { UserManagerService } from '../shared/services/user-manager.service';
+
+// models
 import { User } from '../shared/models/user';
 
 @Component({
@@ -11,8 +16,10 @@ export class UserDetailsComponent implements OnInit {
   userData: User;
   updateError: string;
   updateCompleted: boolean;
+  deleteError: string;
+  deleteCompleted: boolean;
 
-  constructor(private userMgr: UserManagerService) { }
+  constructor(private userMgr: UserManagerService, private router: Router) { }
 
   ngOnInit() {
     this.reset();
@@ -24,6 +31,8 @@ export class UserDetailsComponent implements OnInit {
   reset() {
     this.updateError = '';
     this.updateCompleted = false;
+    this.deleteError = '';
+    this.deleteCompleted = false;
   }
 
   submitChanges() {
@@ -33,12 +42,28 @@ export class UserDetailsComponent implements OnInit {
         this.updateCompleted = true;
         setTimeout(() => {
           this.updateCompleted = false;
-        }, 700);
+        }, 1000);
 
       })
       .catch((err: Error) => {
         this.updateError = err.message;
       });
+  }
+
+  terminateUser() {
+    if (confirm('Are you sure you want to delete your user?')) {
+      this.userMgr.deleteUser(this.userData)
+        .then(() => {
+          this.deleteCompleted = true;
+          setTimeout(() => {
+            this.deleteCompleted = false;
+            this.router.navigate(['/register']);
+          }, 1000);
+        })
+        .catch((err: Error) => {
+          this.deleteError = err.message;
+        });
+    }
   }
 
 }

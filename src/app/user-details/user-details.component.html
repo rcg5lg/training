@@ -75,10 +75,10 @@
         </div>
       </div>
 
-      <div class="form-group col-md-12" *ngIf="updateError && editForm.pristine" >
+      <div class="form-group col-md-12" *ngIf="updateError && editForm.pristine">
         <div class="alert alert-danger">{{ updateError }}</div>
       </div>
-      <div class="form-group col-md-12" *ngIf="updateCompleted" >
+      <div class="form-group col-md-12" *ngIf="updateCompleted">
         <div class="alert alert-success">Changed saved</div>
       </div>
 
@@ -94,7 +94,14 @@
     </summary>
     <div class="terminate-holder row">
       <div class='alert alert-danger col-md-7'>Are you sure ?</div>
-      <button class="btn btn-primary col-md-3 col-md-offset-2">Delete</button>
+      <button class="btn btn-primary col-md-3 col-md-offset-2" (click)="this.terminateUser();">Delete</button>
+
+      <div class="form-group col-md-12" *ngIf="deleteError">
+        <div class="alert alert-danger">{{ deleteError }}</div>
+      </div>
+      <div class="form-group col-md-12" *ngIf="deleteCompleted">
+        <div class="alert alert-success">You will be logged out in a second</div>
+      </div>
     </div>
   </details>
 </div>

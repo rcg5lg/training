@@ -2,12 +2,11 @@ import 'rxjs/add/observable/of';
 import { Injectable, ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApplicationRef } from '@angular/core';
-
-import { User } from '../models/user';
-import { Group } from '../models/group';
-import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+// models
+import { User } from '../models/user';
+import { Group } from '../models/group';
 
 @Injectable()
 export class GroupManagerService {

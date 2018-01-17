@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+
+// components
 import { LoginComponent } from '../login/login.component';
+
+// models
 import { User } from '../shared/models/user';
 
 @Component({

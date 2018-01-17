@@ -1,11 +1,10 @@
-import 'rxjs/add/observable/of';
 import { Injectable, ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApplicationRef } from '@angular/core';
-
-import { User } from '../models/user';
-import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+// models
+import { User } from '../models/user';
 
 @Injectable()
 export class UserManagerService {
@@ -107,7 +106,9 @@ export class UserManagerService {
           throw Error('Invalid data');
         }
 
-        return userData;
+        this.updateLoggedUser(null);
+
+        return true;
       })
       .catch((err) => {
         console.log(err);

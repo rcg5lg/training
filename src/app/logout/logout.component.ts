@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserManagerService } from '../shared/services/user-manager.service';
 import { Router } from '@angular/router';
+
+// services
+import { UserManagerService } from '../shared/services/user-manager.service';
 
 @Component({
   selector: 'app-logout',
@@ -24,7 +26,7 @@ export class LogoutComponent implements OnInit {
   ngOnInit(): void {
     this.reset();
 
-    if (confirm('Are you sure')) {
+    if (confirm('Please confirm your logout')) {
       this.started = true;
       setTimeout(() => {
         this.userMgr.doUserLogout()
