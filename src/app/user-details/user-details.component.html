@@ -1,3 +1,100 @@
-<p>
-  user-details works!
-</p>
+<div class="container">
+  <details open>
+    <summary> Change details</summary>
+    <form class="edit-form" #editForm="ngForm" (ngSubmit)="submitChanges(); editForm.form.reset()">
+
+      <div class="form-group col-md-12">
+        <label for="name">Username</label>
+        <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="userData.name" #nameInput="ngModel" placeholder="Username">
+        <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)" class="alert alert-danger">
+          <span *ngIf="nameInput.errors.required">
+            Name is required.
+          </span>
+          <span *ngIf="nameInput.errors.minlength">
+            Name must be at least 4 characters long.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group  col-md-8">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" required [(ngModel)]="userData.email" #emailInput="ngModel" placeholder="Email">
+        <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="alert alert-danger">
+          <span *ngIf="emailInput.errors.required">
+            Email is required.
+          </span>
+          <span *ngIf="emailInput.errors.minlength">
+            Email must be at least 4 characters long.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group  col-md-4">
+        <label for="age">Age</label>
+        <input type="number" class="form-control" id="age" name="age" required [(ngModel)]="userData.age" #ageInput="ngModel" placeholder="0">
+        <div *ngIf="ageInput.invalid && (ageInput.dirty || ageInput.touched)" class="alert alert-danger">
+          <span *ngIf="ageInput.errors.required">
+            Age is required.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group col-md-12">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" name="description" required [(ngModel)]="userData.description" #descriptionInput="ngModel"
+          placeholder="Description">
+        <div *ngIf="descriptionInput.invalid && (descriptionInput.dirty || descriptionInput.touched)" class="alert alert-danger">
+          <span *ngIf="descriptionInput.errors.required">
+            Descption is required.
+          </span>
+          <span *ngIf="descriptionInput.errors.minlength">
+            Name must be at least 4 characters long.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group col-md-12">
+        <label for="agency">Agency</label>
+        <input type="text" class="form-control" id="agency" name="agency" required [(ngModel)]="userData.agency" #agencyInput="ngModel"
+          placeholder="Agency">
+        <div *ngIf="agencyInput.invalid && (agencyInput.dirty || agencyInput.touched)" class="alert alert-danger">
+          <span *ngIf="agencyInput.errors.required">
+            Agency is required.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group col-md-12">
+        <label for="project">Project</label>
+        <input type="text" class="form-control" id="project" name="project" required [(ngModel)]="userData.currentProject" #projectInput="ngModel"
+          placeholder="Current project">
+        <div *ngIf="projectInput.invalid && (projectInput.dirty || projectInput.touched)" class="alert alert-danger">
+          <span *ngIf="projectInput.errors.required">
+            Project is required.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group col-md-12" *ngIf="updateError && editForm.pristine" >
+        <div class="alert alert-danger">{{ updateError }}</div>
+      </div>
+      <div class="form-group col-md-12" *ngIf="updateCompleted" >
+        <div class="alert alert-success">Changed saved</div>
+      </div>
+
+      <div class="form-group button-holder">
+        <button type="submit" [disabled]="editForm.form.invalid" class="btn btn-primary btn-block">Save</button>
+      </div>
+
+    </form>
+  </details>
+
+  <details>
+    <summary> Terminate account
+    </summary>
+    <div class="terminate-holder row">
+      <div class='alert alert-danger col-md-7'>Are you sure ?</div>
+      <button class="btn btn-primary col-md-3 col-md-offset-2">Delete</button>
+    </div>
+  </details>
+</div>

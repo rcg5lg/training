@@ -19,6 +19,10 @@ export class UserManagerService {
     this.loggedUser$ = new BehaviorSubject(this.loggedUser);
   }
 
+  public hasLoggedUser() {
+    return this.loggedUser !== null;
+  }
+
   updateLoggedUser(newUser: User) {
     this.loggedUser = newUser;
     this.loggedUser$.next(this.loggedUser);
@@ -110,6 +114,26 @@ export class UserManagerService {
       })
       .catch((err) => {
         console.log(err);
+      });
+  }
+
+  updateUser(userData: User) {
+    const updateUserUrl = this.userAPIUrl + 'users/' + userData.token;
+
+    const requestData = {
+      ...userData
+    };
+
+    return this.http.put(updateUserUrl, requestData).toPromise()
+      .then((response) => {
+        if (response['success'] === false) {
+          throw Error('Invalid data');
+        }
+
+        const newUser: User = response['user'];
+        this.updateLoggedUser(newUser);
+
+        return userData;
       });
   }
 }

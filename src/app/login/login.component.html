@@ -19,13 +19,13 @@
     </div>
 
     <div class="form-group" [hidden]="!loginError || userForm.dirty" class="alert alert-danger">
-      11{{ loginError }}
+      {{ loginError }}
     </div>
     <div class="form-group" [hidden]="!welcomeMsg" class="alert alert-success">
-      11{{ welcomeMsg }}
+      {{ welcomeMsg }}
     </div>
 
-    <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-success">Submit</button>
+    <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-primary btn-block">Submit</button>
 
   </form>
 </div>

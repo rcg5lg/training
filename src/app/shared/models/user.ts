@@ -1,5 +1,11 @@
 export class User {
     username: string;
-    name: string;
     token: string;
+    name: string;
+    email: string;
+    description: string;
+    avatarUrl: string;
+    age: number;
+    currentProject: string;
+    agency: string;
 }

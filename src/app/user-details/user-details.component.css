@@ -1,0 +1,41 @@
+details {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #554444;
+    margin-bottom: 10px;
+}
+
+summary {
+    font-size: 18px;
+    font-weight: bold;
+    outline: none;
+    user-select: none;
+}
+
+details[open] {
+    padding-bottom: 0px;
+}
+
+details[open] summary {
+    margin-bottom: 10px;
+}
+
+.edit-form .button-holder {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.edit-form .alert {
+    margin-bottom: 0px;
+}
+
+.terminate-holder {
+    padding: 10px;
+}
+
+.terminate-holder .alert {
+    padding: 6px;
+    text-align: center;
+}
