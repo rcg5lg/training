@@ -37,7 +37,7 @@ export class LoginComponent {
         this.welcomeMsg = 'Hello ' + userData.name;
 
         setTimeout(() => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/groups']);
         }, 700);
 
       })

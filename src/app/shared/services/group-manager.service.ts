@@ -11,16 +11,27 @@ import { Group } from '../models/group';
 @Injectable()
 export class GroupManagerService {
 
-  private groupAPIUrl = 'http://localhost:81/api/';
+  private groupList: Group[];
+  public groupList$: BehaviorSubject<Group[]>;
 
-  constructor(private http: HttpClient) { }
+  private APIUrl = 'http://localhost:81/api/';
 
-  getGroupForUser(userData: User): Promise<any> {
+  constructor(private http: HttpClient) {
+    this.groupList = [];
+    this.groupList$ = new BehaviorSubject<Group[]>(this.groupList);
+  }
+
+  updateGroupList(newGroupList: Group[]) {
+    this.groupList = newGroupList;
+    this.groupList$.next(this.groupList);
+  }
+
+  getGroupsForUser(userData: User): Promise<any> {
     if (!userData) {
       return Promise.reject(new Error('No credentials provided'));
     }
 
-    const getUserGroupUrl = this.groupAPIUrl + 'groups/' + userData.token;
+    const getUserGroupUrl = this.APIUrl + 'groups/' + userData.token;
 
     return this.http.get(getUserGroupUrl).toPromise()
       .then((response) => {
@@ -28,13 +39,36 @@ export class GroupManagerService {
           throw Error('Invalid user');
         }
 
-        const rawGroupList: [any] = response['items'];
+        const rawGroupList: Group[] = response['items'];
         const groupList = rawGroupList.map((rawGroup) => {
           const groupItem = rawGroup as Group;
           return groupItem;
         });
 
-        return groupList;
+        this.updateGroupList(groupList);
+        return true;
+      });
+  }
+
+  deleteGroup(groupId: number): Promise<boolean> {
+    if (!groupId) {
+      return Promise.reject(new Error('No group provided'));
+    }
+
+    const deleteGroupUrl = this.APIUrl + 'groups/' + groupId;
+
+    return this.http.delete(deleteGroupUrl).toPromise()
+      .then((response) => {
+        if (response['success'] === false) {
+          throw Error('Could not delete ');
+        }
+
+        const newGroupList = this.groupList.filter((currentGroup) => {
+          return currentGroup.id !== groupId;
+        });
+
+        this.updateGroupList(newGroupList);
+        return true;
       });
   }
 

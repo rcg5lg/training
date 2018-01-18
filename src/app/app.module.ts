@@ -22,6 +22,7 @@ import { UserWelcomeComponent } from './user-welcome/user-welcome.component';
 // services
 import { UserManagerService } from './shared/services/user-manager.service';
 import { GroupManagerService } from './shared/services/group-manager.service';
+import { GroupsModule } from './groups/groups.module';
 
 @NgModule({
   declarations: [
@@ -38,9 +39,10 @@ import { GroupManagerService } from './shared/services/group-manager.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    GroupsModule,
+    AppRoutingModule
   ],
   providers: [UserManagerService, GroupManagerService],
   bootstrap: [AppComponent]

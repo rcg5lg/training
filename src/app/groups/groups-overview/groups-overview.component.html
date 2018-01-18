@@ -1,0 +1,15 @@
+<div class='container'>
+  <div *ngIf="this.confirmOperation" class="alert alert-success text-center">
+    Operation successfull!
+  </div>
+  <div *ngIf="this.errorMessage" class="alert alert-danger center-block">
+    <span class="inline-block">
+      Error: {{ this.errorMessage }}
+      <br/> Please retry later!
+    </span>
+  </div>
+  <div *ngFor="let group of groupList">
+    <app-group-item [groupData]="group" (deleteRecord)="handleDelete($event)" (editRecord)="handleEdit($event)">
+    </app-group-item>
+  </div>
+</div>

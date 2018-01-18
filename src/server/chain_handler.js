@@ -1,6 +1,6 @@
 var optionsHandler = require('./handlers/optionsHandler.js');
 var userHandler = require('./handlers/userHandler');
-// var groupHandler = require('./handlers/groupHandler');
+var groupHandler = require('./handlers/groupHandler');
 // var postHandler = require('./handlers/postHandler');
 
 var HandlerChainWrapper = function(handler) {
@@ -23,17 +23,17 @@ var HandlerChainWrapper = function(handler) {
 		}
 		
 		// nobody can handle... so just return false
-		return res;
+		return false;
 	}
 }
 
 var optionsChain = new HandlerChainWrapper(optionsHandler);
 var userChain = new HandlerChainWrapper(userHandler);
-// var groupChain = new HandlerChainWrapper(groupHandler);
+var groupChain = new HandlerChainWrapper(groupHandler);
 // var postChain = new HandlerChaingWrapper(postHandler);
 
 optionsChain.addNextHandler(userChain);
-// userChain.addNextHandler(groupChain);
+userChain.addNextHandler(groupChain);
 // groupChain.addNextHandler(postChain);
 
 module.exports = optionsChain;

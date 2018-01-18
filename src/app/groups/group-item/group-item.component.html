@@ -1,0 +1,38 @@
+<details class="well">
+  <summary>
+    <span class='summary-title'>{{ groupData.name }}</span>
+    <span class='button-holder'>
+        <button class='' (click)="editGroup($event);">
+            <span aria-hidden="true" class='text-info'>edit</span>
+        </button>
+        <button class="" (click)="deleteGroup($event);">
+          <span aria-hidden="true" class='text-danger'>&times;</span>
+        </button>
+    </span>
+
+  </summary>
+  <div class="group-details">
+    <div class=''>
+      <span class="label label-default">Owner: </span>
+      <span class=""> {{ groupData.owner }} </span>
+    </div>
+    <div class='description-item'>
+      <span class="label label-default">Description: </span>
+      <div class='description-field'>{{ groupData.description }}</div>
+    </div>
+    <div class='members-item'>
+      <span class="label label-default">Members: </span>
+      <ul class='members-list'>
+        <li *ngFor="let member of this.getVisibleMembers()">
+          {{ member | titlecase }}
+        </li>
+      </ul>
+      <ng-container *ngIf='this.groupData.members.length > this.visibleMembersLimit'>
+        <span *ngIf='!this.showAllMembers' class='members-show-more text-primary' (click)='this.updateMembersVisibility()'>
+          more members...
+        </span>
+        <span *ngIf='this.showAllMembers' class='members-show-more text-primary' (click)='this.updateMembersVisibility()'>less members...</span>
+      </ng-container>
+    </div>
+  </div>
+</details>

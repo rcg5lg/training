@@ -1,0 +1,44 @@
+details {
+  margin-bottom: 5px;
+}
+summary {
+  outline: none;
+  user-select: none;
+}
+summary .button-holder {
+  float: right;
+}
+details[open] summary .summary-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+.group-details {
+  padding: 15px;
+}
+.group-details > div {
+  margin-top: 10px;
+}
+.group-details .label {
+  margin-right: 5px
+}
+.group-details .description-field {
+  border: 1px solid black;
+  min-height: 50px;
+  max-height: 100px;
+  margin-top: 5px;
+  padding: 5px;
+}
+.group-details .members-list {
+  margin-top: 5px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+}
+.group-details .members-show-more {
+  margin-left: 25px;
+  color: #337ab7;
+}
+.group-details .members-show-more:hover {
+  cursor: pointer;
+  font-weight: bold;
+}

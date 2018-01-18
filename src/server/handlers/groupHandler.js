@@ -1,0 +1,100 @@
+// handle api request for groups
+var groupHandler = new function () {
+
+	this.canHandleRequest = function (req) {
+		console.log('-- groupHandler - canHandle ? ');
+
+		const reqMethod = req.method.toUpperCase();
+		const reqUrl = req.url;
+
+		let handlerList = [];
+		if (this.whitelistRegex.hasOwnProperty(reqMethod)) {
+			handlerList = this.whitelistRegex[reqMethod];
+		}
+
+		for (let i = 0; i < handlerList.length; i++) {
+			if (handlerList[i].regex.test(reqUrl)) {
+				console.log('-- groupHandler - canHandle ? YES ');
+				return true;
+			}
+		}
+
+		console.log('-- groupHandler - canHandle ? NO ');
+		return false;
+	}
+
+	this.handleRequest = function (req, body, res) {
+		const reqMethod = req.method.toUpperCase();
+		const reqUrl = req.url;
+
+		let handlerList = [];
+		if (this.whitelistRegex.hasOwnProperty(reqMethod)) {
+			handlerList = this.whitelistRegex[reqMethod];
+		}
+
+		for (let i = 0; i < handlerList.length; i++) {
+			if (handlerList[i].regex.test(reqUrl)) {
+				console.log(handlerList[i]);
+				handlerList[i].handler(req, body, res);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	this.getGroupsForUser = function (req, body, res) {
+		const token = req.url.replace(/^\/api\/groups\//, "");
+
+		console.log('-- token =||' + token + '||');
+		console.log("--------------");
+		res.writeHead(200, {
+			'Content-Type': 'text/json',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET',
+			'Access-Control-Allow-Headers': 'Content-Type'
+		});
+		let items = [
+			{ id: 1, name: "name_1", owner: "member1", ownerToken: "member1_token", description: "group 1 description", members: ['member1'] },
+			{ id: 2, name: "name_2", owner: "member1", ownerToken: "member1_token", description: "group 2 description", members: ['member1', 'member2'] },
+			{ id: 3, name: "name_3", owner: "member2", ownerToken: "member2_token", description: "group 3 description", members: ['member1', 'member2', 'member3'] },
+			{ id: 4, name: "name_4", owner: "member1", ownerToken: "member1_token", description: "group 4 description", members: ['member1', 'member2', 'member3', 'member4'] }
+		];
+		let final = { 'success': true, items };
+		res.write(JSON.stringify(final));
+		res.end();
+	}
+
+	this.deleteGroup = function(req, body, res) {
+		const groupId = +req.url.replace(/^\/api\/groups\//, "");
+
+		console.log('-- groupId =||' + groupId + '||');
+		console.log("--------------");
+		res.writeHead(200, {
+			'Content-Type': 'text/json',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET',
+			'Access-Control-Allow-Headers': 'Content-Type'
+		});
+		let final = { 'success': true };
+		res.write(JSON.stringify(final));
+		res.end();
+	}
+
+	this.whitelistRegex = {
+		'GET': [
+			{ // update user
+				'regex': /^\/api\/groups\/[a-zA-Z_=0-9\-_]{5,25}$/,
+				'handler': this.getGroupsForUser
+			}
+		],
+		'DELETE': [
+			{ // update user
+				'regex': /^\/api\/groups\/\d+$/,
+				'handler': this.deleteGroup
+			}
+		]
+	}
+}
+
+module.exports = groupHandler;

@@ -11,7 +11,7 @@ export class UserManagerService {
 
   private loggedUser: User;
   public loggedUser$: BehaviorSubject<User>;
-  private userAPIUrl = 'http://localhost:81/api/';
+  private APIUrl = 'http://localhost:81/api/';
 
   private LocalStorage_UserKey = 'jorj-training-userDetails';
 
@@ -26,6 +26,10 @@ export class UserManagerService {
     }
 
     this.loggedUser$ = new BehaviorSubject(this.loggedUser);
+  }
+
+  public getLoggedUser() {
+    return this.loggedUser;
   }
 
   public hasLoggedUser() {
@@ -44,7 +48,7 @@ export class UserManagerService {
       return Promise.reject(new Error('No credentials provided'));
     }
 
-    const checkLoginUrl = this.userAPIUrl + 'users/check_login';
+    const checkLoginUrl = this.APIUrl + 'users/check_login';
     const requestData = {
       username,
       password
@@ -68,7 +72,7 @@ export class UserManagerService {
       return Promise.reject(new Error('No user logged in'));
     }
 
-    const logoutUrl = this.userAPIUrl + 'users/logout';
+    const logoutUrl = this.APIUrl + 'users/logout';
     const requestData = {
       token: this.loggedUser.token
     };
@@ -90,7 +94,7 @@ export class UserManagerService {
       return Promise.reject(new Error('No user data provided'));
     }
 
-    const registerUrl = this.userAPIUrl + 'users';
+    const registerUrl = this.APIUrl + 'users';
     const requestData = {
       ...userData,
       password
@@ -110,7 +114,7 @@ export class UserManagerService {
   }
 
   deleteUser(userData: User) {
-    const terminateUrl = this.userAPIUrl + 'users/' + userData.token;
+    const terminateUrl = this.APIUrl + 'users/' + userData.token;
 
     return this.http.delete(terminateUrl).toPromise()
       .then((response) => {
@@ -128,7 +132,7 @@ export class UserManagerService {
   }
 
   updateUser(userData: User) {
-    const updateUserUrl = this.userAPIUrl + 'users/' + userData.token;
+    const updateUserUrl = this.APIUrl + 'users/' + userData.token;
 
     const requestData = {
       ...userData
