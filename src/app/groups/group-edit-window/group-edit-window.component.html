@@ -1,0 +1,37 @@
+<app-modal [title]="getTitle()" (closeEvent)="handleClose($event)">
+  <form class='fill'>
+    <div class="form-group ">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="groupData.name" #nameInput="ngModel">
+      <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)" class="alert alert-danger">
+        <span *ngIf="nameInput.errors.required">
+          Name is required.
+        </span>
+        <span *ngIf="nameInput.errors.minlength">
+          Name must be at least 4 characters long.
+        </span>
+      </div>
+    </div>
+    <div class="form-group ">
+      <label for="owner">Owner</label>
+      <select class="form-control" id="owner" name="owner" required [(ngModel)]="groupData.owner">
+        <option *ngFor='let user of userList' [selected]="user.name == groupData.owner">
+          {{user.name}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group ">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" name="description" required [(ngModel)]="groupData.description"
+        #descriptionInput="ngModel"> </textarea>
+      <div *ngIf="descriptionInput.invalid && (descriptionInput.dirty || descriptionInput.touched)" class="alert alert-danger">
+        <span *ngIf="descriptionInput.errors.required">
+          Description is required.
+        </span>
+        <span *ngIf="descriptionInput.errors.minlength">
+          description must be at least 4 characters long.
+        </span>
+      </div>
+    </div>
+  </form>
+</app-modal>

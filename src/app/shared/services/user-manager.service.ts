@@ -11,6 +11,7 @@ export class UserManagerService {
 
   private loggedUser: User;
   public loggedUser$: BehaviorSubject<User>;
+
   private APIUrl = 'http://localhost:81/api/';
 
   private LocalStorage_UserKey = 'jorj-training-userDetails';
@@ -148,6 +149,24 @@ export class UserManagerService {
         this.updateLoggedUser(newUser);
 
         return userData;
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+
+  getAllUsers() {
+    const updateUserUrl = this.APIUrl + 'users/';
+
+    return this.http.get(updateUserUrl).toPromise()
+      .then((response) => {
+        if (response['success'] === false) {
+          throw Error('Invalid data');
+        }
+
+        const userList: User[] = response['users'];
+        return userList;
+      }).catch((err) => {
+        console.log(err);
       });
   }
 }

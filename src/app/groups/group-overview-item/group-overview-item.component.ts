@@ -5,11 +5,11 @@ import { Group } from '../../shared/models/group';
 import { GroupMember } from '../../shared/models/group-member';
 
 @Component({
-  selector: 'app-group-item',
-  templateUrl: './group-item.component.html',
-  styleUrls: ['./group-item.component.css']
+  selector: 'app-group-overview-item',
+  templateUrl: './group-overview-item.component.html',
+  styleUrls: ['./group-overview-item.component.css']
 })
-export class GroupItemComponent {
+export class GroupOverviewItemComponent {
 
   @Input() groupData: Group;
   @Output() deleteRecord: EventEmitter<number>;

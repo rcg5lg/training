@@ -1,0 +1,21 @@
+<div class="app-modal row" [class.modal-visible]="this.displayed">
+    <div class="app-modal-window center-block">
+        <div class="app-modal-title">
+            {{title}}
+            <span class='app-modal-title-buttons-holder'>
+                <button (click)="closeWindow()">
+                    &times;
+                </button>
+            </span>
+        </div>
+        <div class="app-modal-body">
+            <ng-content>
+            </ng-content>
+        </div>
+        <div class="app-modal-button-bar text-right">
+            <button class='btn btn-primary' (click)="saveData()">
+                Save
+            </button>
+        </div>
+    </div>
+</div>

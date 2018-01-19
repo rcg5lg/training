@@ -8,8 +8,19 @@
       <br/> Please retry later!
     </span>
   </div>
-  <div *ngFor="let group of groupList">
-    <app-group-item [groupData]="group" (deleteRecord)="handleDelete($event)" (editRecord)="handleEdit($event)">
-    </app-group-item>
+  <div class='button-menu'>
+    <button class='text-info' (click)="this.addGroup()">
+      + group
+    </button>
   </div>
+
+  <div *ngFor="let group of groupList">
+    <app-group-overview-item [groupData]="group" (deleteRecord)="handleDelete($event)" (editRecord)="editGroup($event)">
+    </app-group-overview-item>
+  </div>
+
+  <ng-container *ngIf="this.showEdit()">
+    <app-group-edit-window [groupData]="this.getEditData()" [userList]="userList" (closeWindow)="this.resolveEdit($event)">
+    </app-group-edit-window>
+  </ng-container>
 </div>

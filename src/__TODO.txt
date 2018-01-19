@@ -5,3 +5,6 @@ TODO_list:
 - iconita cu tooltip in loc de div cu eroare
 - validari adevarata pe inputurile din formulare
 - nu merge validarea de tip email pt fieldul din register
+- sa folosesc iduri pentru grupuri, in loc de user.name
+- sa fac un serviciu pt toast message ( closable sau pe baza de timp )
+- prind erorile in asa fel incat sa nu crape aplicatia ( sa am un buton de retry ceva pt situatiile in care crapa requesturi)

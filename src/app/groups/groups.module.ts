@@ -1,18 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { GroupsOverviewComponent } from './groups-overview/groups-overview.component';
 import { GroupsRoutingModule } from './groups-routing.module';
-import { GroupItemComponent } from './group-item/group-item.component';
+import { GroupOverviewItemComponent } from './group-overview-item/group-overview-item.component';
+import { ModalComponent } from '../shared/components/modal.component';
+import { GroupEditWindowComponent } from './group-edit-window/group-edit-window.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    GroupsRoutingModule
+    GroupsRoutingModule,
+    FormsModule
   ],
   declarations: [
     GroupsOverviewComponent,
-    GroupItemComponent
+    GroupOverviewItemComponent,
+    ModalComponent,
+    GroupEditWindowComponent
   ]
 })
 export class GroupsModule { }

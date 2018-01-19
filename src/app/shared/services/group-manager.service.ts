@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 // models
 import { User } from '../models/user';
 import { Group } from '../models/group';
+import { PACKAGE_ROOT_URL } from '@angular/core/src/application_tokens';
 
 @Injectable()
 export class GroupManagerService {
@@ -21,12 +22,16 @@ export class GroupManagerService {
     this.groupList$ = new BehaviorSubject<Group[]>(this.groupList);
   }
 
-  updateGroupList(newGroupList: Group[]) {
+  private updateGroupList(newGroupList: Group[]) {
     this.groupList = newGroupList;
     this.groupList$.next(this.groupList);
   }
 
-  getGroupsForUser(userData: User): Promise<any> {
+  public cloneGroup(groupItem: Group): Group {
+    return JSON.parse(JSON.stringify(groupItem));
+  }
+
+  getGroupsForUser(userData: User): Promise<boolean> {
     if (!userData) {
       return Promise.reject(new Error('No credentials provided'));
     }
@@ -50,12 +55,39 @@ export class GroupManagerService {
       });
   }
 
+  findGroupById(groupId: number): Promise<Group> {
+    if (!groupId) {
+      return Promise.reject(new Error('No group provided'));
+    }
+
+    const cachedGroup: Group = this.groupList.find((currentRecord: Group) => {
+      return currentRecord.id === groupId;
+    });
+
+    if (!cachedGroup) {
+      return Promise.reject(new Error('Group not found'));
+      // const getGroupUrl = this.APIUrl + 'groups/' + groupId;
+
+      // return this.http.get(getGroupUrl).toPromise()
+      //   .then((response) => {
+      //     if (response['success'] === false) {
+      //       throw Error('Could not delete ');
+      //     }
+
+      //     const groupItem = response['group'] as Group;
+      //     return groupItem;
+      //   });
+    } else {
+      return Promise.resolve(this.cloneGroup(cachedGroup));
+    }
+  }
+
   deleteGroup(groupId: number): Promise<boolean> {
     if (!groupId) {
       return Promise.reject(new Error('No group provided'));
     }
 
-    const deleteGroupUrl = this.APIUrl + 'groups/' + groupId;
+    const deleteGroupUrl = this.APIUrl + 'group/' + groupId;
 
     return this.http.delete(deleteGroupUrl).toPromise()
       .then((response) => {
@@ -68,6 +100,60 @@ export class GroupManagerService {
         });
 
         this.updateGroupList(newGroupList);
+        return true;
+      });
+  }
+
+  addGroup(groupData: Group): Promise<boolean> {
+    const addGroupUrl = this.APIUrl + 'group';
+
+    const requestData = {
+      ...groupData
+    };
+
+    return this.http.post(addGroupUrl, requestData).toPromise()
+      .then((response) => {
+        if (response['success'] === false) {
+          throw Error('Could not add group');
+        }
+
+        const groupItem = response['group'] as Group;
+        this.groupList.push(groupItem);
+
+        this.updateGroupList(this.groupList);
+        return true;
+      });
+  }
+
+  editGroup(groupData: Group): Promise<boolean> {
+
+    if (!groupData || !groupData.id) {
+      return Promise.reject(new Error('No group provided'));
+    }
+
+    const editGroupUrl = this.APIUrl + 'group/' + groupData.id;
+    const requestData = {
+      'name': groupData.name,
+      'description': groupData.description,
+      'owner': groupData.owner
+    };
+
+    return this.http.put(editGroupUrl, requestData).toPromise()
+      .then((response) => {
+        if (response['success'] === false) {
+          throw Error('Could not add group');
+        }
+
+        const groupItem = response['group'] as Group;
+        const groupIndex = this.groupList.findIndex((currentGroup) => {
+          return currentGroup.id === groupData.id;
+        });
+
+        console.log('--- data from request');
+        console.log(groupItem);
+        this.groupList[groupIndex] = groupItem;
+
+        this.updateGroupList(this.groupList);
         return true;
       });
   }
