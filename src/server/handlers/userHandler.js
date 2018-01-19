@@ -52,7 +52,7 @@ var usersHandler = new function () {
 		let final = { 'success': true, 'user': { 
 			username: 'member1_update',
 			token: "member1_token_update",
-			name: "name member1_update",
+			name: "member1_update",
 			email: "member1@email.test_update",
 			description: "description token_update",
 			avatarUrl: 'picture_update',
@@ -100,7 +100,7 @@ var usersHandler = new function () {
 		let final = { 'success': true, 'user': { 
 			username: 'member1',
 			token: "member1_token",
-			name: "name member1",
+			name: "member1",
 			email: "member1@email.test",
 			description: "description token",
 			avatarUrl: 'picture',
@@ -138,7 +138,7 @@ var usersHandler = new function () {
 		let final = { 'success': true, 'user': { 
 			username: 'member1',
 			token: "member1_token",
-			name: "name member1",
+			name: "member1",
 			email: "member1@email.test",
 			description: "description token",
 			avatarUrl: 'picture',
@@ -150,7 +150,70 @@ var usersHandler = new function () {
 		res.end();
 	}
 
+	this.getAllUsers = function(req, body, res) {
+		console.log('-- userHandler - get all users ');
+
+		res.writeHead(200, { 
+			'Content-Type': 'text/json',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'POST',
+			'Access-Control-Allow-Headers': 'Content-Type'
+		} );
+		let final = { 
+			'success': true, 
+			'users': [{ 
+				username: 'member1',
+				token: "member1_token",
+				name: "member1",
+				email: "member1@email.test",
+				description: "description token",
+				avatarUrl: 'picture',
+				age: 22,
+				currentProject: 'member 1 project',
+				agency: 'local agency' 
+			},{ 
+				username: 'member2',
+				token: "member2_token",
+				name: "member2",
+				email: "member2@email.test",
+				description: "description token",
+				avatarUrl: 'picture',
+				age: 22,
+				currentProject: 'member 2 project',
+				agency: 'local agency' 
+			},{ 
+				username: 'member3',
+				token: "member3_token",
+				name: "member3",
+				email: "member3@email.test",
+				description: "description token",
+				avatarUrl: 'picture',
+				age: 22,
+				currentProject: 'member 3 project',
+				agency: 'local agency' 
+			},{ 
+				username: 'member4',
+				token: "member4_token",
+				name: "member4",
+				email: "member4@email.test",
+				description: "description token",
+				avatarUrl: 'picture',
+				age: 22,
+				currentProject: 'member 4 project',
+				agency: 'local agency' 
+			}]
+		};
+		res.write(JSON.stringify(final));
+		res.end();
+	}
+
 	this.whitelistRegex = {
+		'GET': [
+			{ // get all users
+				'regex': /^\/api\/users(\/)?$/,
+				'handler': this.getAllUsers
+			}
+		],
 		'PUT': [
 			{ // update user
 				'regex': /^\/api\/users\/[a-zA-Z_=0-9\-_]{5,25}$/,

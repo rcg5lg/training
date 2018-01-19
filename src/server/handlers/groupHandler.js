@@ -66,7 +66,7 @@ var groupHandler = new function () {
 	}
 
 	this.deleteGroup = function(req, body, res) {
-		const groupId = +req.url.replace(/^\/api\/groups\//, "");
+		const groupId = +req.url.replace(/^\/api\/group\//, "");
 
 		console.log('-- groupId =||' + groupId + '||');
 		console.log("--------------");
@@ -81,17 +81,72 @@ var groupHandler = new function () {
 		res.end();
 	}
 
+	this.addGroup = function (req, body, res) {
+
+		console.log('-- params =||' + body + '||');
+		console.log("--------------");
+		res.writeHead(200, {
+			'Content-Type': 'text/json',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET',
+			'Access-Control-Allow-Headers': 'Content-Type'
+		});
+		const group = { id: 5, name: "name_1", owner: "member1", ownerToken: "member1_token", description: "group 1 description", members: ['member1'] };
+		let final = { 'success': true, 'group': group };
+		res.write(JSON.stringify(final));
+		res.end();
+	}
+
+	this.updateGroup = function (req, body, res) {
+
+		const groupId = +req.url.replace(/^\/api\/group\//, "");
+		console.log('-- groupId =||' + groupId + '||');
+
+		console.log('-- params =||' + body + '||');
+		console.log('-- params =||' + body.name + '||');
+		console.log("--------------");
+		res.writeHead(200, {
+			'Content-Type': 'text/json',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET',
+			'Access-Control-Allow-Headers': 'Content-Type'
+		});
+		const group = {
+			'id': groupId,
+			'name': body.name,
+			'owner': body.owner,
+			'ownerToken': "member1_token",
+			'description': "group 1 description",
+			members: ['member1', body.owner]
+		};
+		let final = { 'success': true, 'group': group };
+		res.write(JSON.stringify(final));
+		res.end();
+	}
+
 	this.whitelistRegex = {
 		'GET': [
-			{ // update user
+			{ // get groups for user
 				'regex': /^\/api\/groups\/[a-zA-Z_=0-9\-_]{5,25}$/,
 				'handler': this.getGroupsForUser
 			}
 		],
 		'DELETE': [
-			{ // update user
-				'regex': /^\/api\/groups\/\d+$/,
+			{ // delete group by id
+				'regex': /^\/api\/group\/\d+$/,
 				'handler': this.deleteGroup
+			}
+		],
+		'POST': [
+			{ // save group
+				'regex': /^\/api\/group(\/)?$/,
+				'handler': this.addGroup
+			}
+		],
+		'PUT': [
+			{ // update group fields
+				'regex': /^\/api\/group\/\d+$/,
+				'handler': this.updateGroup
 			}
 		]
 	}
