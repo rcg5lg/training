@@ -15,9 +15,12 @@ http.createServer(function(req, res) {
 	});
 	req.on('end', function () {
 		console.log('-- Received req = ' + req.method + ' url = ' + req.url);
-		if( ChainedRequestHandler.handleRequest(req, body, res) !== true) {
+		if (body) {
+			body = JSON.parse(body);
+		}
+		if (ChainedRequestHandler.handleRequest(req, body, res) !== true) {
 			console.log('-- Could not handle ' + req.method);
-			res.writeHead(404, {'Content-Type': 'text/plain'});
+			res.writeHead(404, { 'Content-Type': 'text/plain' });
 			res.write('Page not found :P');
 			res.end();
 		} else {
