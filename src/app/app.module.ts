@@ -47,6 +47,4 @@ import { GroupsModule } from './groups/groups.module';
   providers: [UserManagerService, GroupManagerService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  title = 'Hello ';
-}
+export class AppModule { }
