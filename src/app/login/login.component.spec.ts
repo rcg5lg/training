@@ -159,7 +159,7 @@ describe('Login Component', () => {
     expect(divAlerts.length).toBe(2, '2 alert should be displayed');
   }));
 
-  it('-- when clicking on login button, a check_login request should be triggered', fakeAsync(() => {
+  it('-- when clicking on login button with correct inputs, if request is ok, check confirmation message and forwarding', fakeAsync(() => {
     userMgrService = fixture.debugElement.injector.get(UserManagerService);
     const newInputValue = 'Input 1';
     const usernameInput = formInputs[0].nativeElement;
@@ -195,6 +195,35 @@ describe('Login Component', () => {
     }, '');
     expect(redirectUrl).toBe('/groups', `After login, redirect to /groups page should be performed`);
 
+  }));
+
+  it('-- when clicking on login button with correct inputs, if request is not ok, check error message', fakeAsync(() => {
+    userMgrService = fixture.debugElement.injector.get(UserManagerService);
+    const newInputValue = 'Input 1';
+    const usernameInput = formInputs[0].nativeElement;
+    const passInput = formInputs[1].nativeElement;
+
+    usernameInput.value = newInputValue;
+    usernameInput.dispatchEvent(new Event('input'));
+    passInput.value = newInputValue;
+    passInput.dispatchEvent(new Event('input'));
+
+    fixture.detectChanges();
+
+    expect(loginBtn.getAttribute('disabled')).toBeNull('Login button should be enabled');
+
+    const loggedUser = new User();
+    loggedUser.name = 'Jorj';
+    const errorMsg = 'Dummy error';
+    spyOn(userMgrService, 'doUserLogin').and.returnValue(Promise.reject(new Error(errorMsg)));
+
+    loginBtn.click();
+
+    tick();
+    fixture.detectChanges();
+
+    expect(component.welcomeMsg).toBe('', `Welcome message should be empty`);
+    expect(component.loginError).toContain(errorMsg, `Error message should be set`);
   }));
 
 });
