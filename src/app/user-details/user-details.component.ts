@@ -24,6 +24,9 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit() {
     this.reset();
     this.userMgr.loggedUser$.subscribe((userData: User) => {
+      if (!userData) {
+        userData = new User();
+      }
       this.userData = userData;
     });
   }
@@ -36,14 +39,12 @@ export class UserDetailsComponent implements OnInit {
   }
 
   submitChanges() {
-    console.log(this.userData);
     return this.userMgr.updateUser(this.userData)
-      .then((userData: User) => {
+      .then(() => {
         this.updateCompleted = true;
         setTimeout(() => {
           this.updateCompleted = false;
         }, 1000);
-
       })
       .catch((err: Error) => {
         this.updateError = err.message;

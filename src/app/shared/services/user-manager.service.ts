@@ -29,22 +29,22 @@ export class UserManagerService {
     this.loggedUser$ = new BehaviorSubject(this.loggedUser);
   }
 
-  public getLoggedUser() {
+  public getLoggedUser(): User {
     return this.loggedUser;
   }
 
-  public hasLoggedUser() {
+  public hasLoggedUser(): boolean {
     return this.loggedUser !== null;
   }
 
-  updateLoggedUser(newUser: User) {
+  public updateLoggedUser(newUser: User): void {
     localStorage.setItem(this.LocalStorage_UserKey, newUser ? (JSON.stringify(newUser)) : '');
 
     this.loggedUser = newUser;
     this.loggedUser$.next(this.loggedUser);
   }
 
-  doUserLogin(username: string, password: string): Promise<any> {
+  public doUserLogin(username: string, password: string): Promise<void | User> {
     if (!username || !password) {
       return Promise.reject(new Error('No credentials provided'));
     }
@@ -68,7 +68,7 @@ export class UserManagerService {
       });
   }
 
-  doUserLogout() {
+  public doUserLogout(): Promise<void | boolean> {
     if (!this.loggedUser) {
       return Promise.reject(new Error('No user logged in'));
     }
@@ -90,7 +90,7 @@ export class UserManagerService {
       });
   }
 
-  registerUser(userData: User, password: string) {
+  public registerUser(userData: User, password: string): Promise<void | User> {
     if (!userData) {
       return Promise.reject(new Error('No user data provided'));
     }
@@ -110,12 +110,12 @@ export class UserManagerService {
         const newUser: User = response['user'];
         this.updateLoggedUser(newUser);
 
-        return userData;
+        return newUser;
       });
   }
 
-  deleteUser(userData: User) {
-    const terminateUrl = this.APIUrl + 'users/' + userData.token;
+  public deleteUser(userData: User): Promise<void | boolean> {
+    const terminateUrl = this.APIUrl + 'users/' + userData.id;
 
     return this.http.delete(terminateUrl).toPromise()
       .then((response) => {
@@ -126,14 +126,11 @@ export class UserManagerService {
         this.updateLoggedUser(null);
 
         return true;
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }
 
-  updateUser(userData: User) {
-    const updateUserUrl = this.APIUrl + 'users/' + userData.token;
+  public updateUser(userData: User): Promise<void | boolean> {
+    const updateUserUrl = this.APIUrl + 'users/' + userData.id;
 
     const requestData = {
       ...userData
@@ -148,16 +145,14 @@ export class UserManagerService {
         const newUser: User = response['user'];
         this.updateLoggedUser(newUser);
 
-        return userData;
-      }).catch((err) => {
-        console.log(err);
+        return true;
       });
   }
 
-  getAllUsers() {
-    const updateUserUrl = this.APIUrl + 'users/';
+  public getAllUsers(): Promise<void | User[]> {
+    const getUsersUrl = this.APIUrl + 'users/';
 
-    return this.http.get(updateUserUrl).toPromise()
+    return this.http.get(getUsersUrl).toPromise()
       .then((response) => {
         if (response['success'] === false) {
           throw Error('Invalid data');
@@ -165,8 +160,6 @@ export class UserManagerService {
 
         const userList: User[] = response['users'];
         return userList;
-      }).catch((err) => {
-        console.log(err);
       });
   }
 }

@@ -15,7 +15,7 @@
     <div class="form-group ">
       <label for="owner">Owner</label>
       <select class="form-control" id="owner" name="owner" required [(ngModel)]="groupData.owner">
-        <option *ngFor='let user of userList' [selected]="user.name == groupData.owner">
+        <option *ngFor='let user of userList' value={{user.id}} [selected]="user.id == groupData.owner">
           {{user.name}}
         </option>
       </select>

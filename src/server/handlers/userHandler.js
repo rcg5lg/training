@@ -46,10 +46,11 @@ var usersHandler = new function () {
 	this.updateUser = function(req, body, res) {
 		console.log('-- userHandler - updateUser ');
 
-		const token = req.url.replace(/^\/api\/users\//,"");
-		console.log('==== token =||' +token+'||');
+		const userId = +req.url.replace(/^\/api\/users\//,"");
+		console.log('==== id =||' +userId+'||');
 		console.log("--------------");
 		let final = { 'success': true, 'user': { 
+			id: userId,
 			username: 'member1_update',
 			token: "member1_token_update",
 			name: "member1_update",
@@ -73,8 +74,8 @@ var usersHandler = new function () {
 	this.deleteUser = function(req, body, res) {
 		console.log('-- userHandler - deleteUser ');
 		
-		const token = req.url.replace(/^\/api\/users\//,"");
-		console.log('---- token =||' +token+'||');
+		const userId = +req.url.replace(/^\/api\/users\//,"");
+		console.log('---- id =||' +userId+'||');
 		console.log("--------------");
 		res.writeHead(200, { 
 			'Content-Type': 'text/json',
@@ -98,6 +99,7 @@ var usersHandler = new function () {
 		} );
 		
 		let final = { 'success': true, 'user': { 
+			id: 1,
 			username: 'member1',
 			token: "member1_token",
 			name: "member1",
@@ -136,6 +138,7 @@ var usersHandler = new function () {
 			'Access-Control-Allow-Headers': 'Content-Type'
 		} );
 		let final = { 'success': true, 'user': { 
+			id: 1,
 			username: 'member1',
 			token: "member1_token",
 			name: "member1",
@@ -162,6 +165,7 @@ var usersHandler = new function () {
 		let final = { 
 			'success': true, 
 			'users': [{ 
+				id: 1, 
 				username: 'member1',
 				token: "member1_token",
 				name: "member1",
@@ -172,6 +176,7 @@ var usersHandler = new function () {
 				currentProject: 'member 1 project',
 				agency: 'local agency' 
 			},{ 
+				id: 2,
 				username: 'member2',
 				token: "member2_token",
 				name: "member2",
@@ -182,6 +187,7 @@ var usersHandler = new function () {
 				currentProject: 'member 2 project',
 				agency: 'local agency' 
 			},{ 
+				id: 3,
 				username: 'member3',
 				token: "member3_token",
 				name: "member3",
@@ -192,6 +198,7 @@ var usersHandler = new function () {
 				currentProject: 'member 3 project',
 				agency: 'local agency' 
 			},{ 
+				id: 4,
 				username: 'member4',
 				token: "member4_token",
 				name: "member4",
@@ -216,13 +223,13 @@ var usersHandler = new function () {
 		],
 		'PUT': [
 			{ // update user
-				'regex': /^\/api\/users\/[a-zA-Z_=0-9\-_]{5,25}$/,
+				'regex': /^\/api\/users\/\d+$/,
 				'handler': this.updateUser
 			}
 		],
 		'DELETE': [
 			{ // unregister user
-				'regex': /^\/api\/users\/[a-zA-Z_=0-9\-_]{5,25}$/,
+				'regex': /^\/api\/users\/\d+$/,
 				'handler': this.deleteUser
 			}
 		],

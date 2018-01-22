@@ -7,7 +7,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 // models
 import { User } from '../models/user';
 import { Group } from '../models/group';
-import { PACKAGE_ROOT_URL } from '@angular/core/src/application_tokens';
 
 @Injectable()
 export class GroupManagerService {
@@ -22,7 +21,7 @@ export class GroupManagerService {
     this.groupList$ = new BehaviorSubject<Group[]>(this.groupList);
   }
 
-  private updateGroupList(newGroupList: Group[]) {
+  private updateGroupList(newGroupList: Group[]): void {
     this.groupList = newGroupList;
     this.groupList$.next(this.groupList);
   }
@@ -31,12 +30,12 @@ export class GroupManagerService {
     return JSON.parse(JSON.stringify(groupItem));
   }
 
-  getGroupsForUser(userData: User): Promise<boolean> {
+  public getGroupsForUser(userData: User): Promise<boolean> {
     if (!userData) {
       return Promise.reject(new Error('No credentials provided'));
     }
 
-    const getUserGroupUrl = this.APIUrl + 'groups/' + userData.token;
+    const getUserGroupUrl = this.APIUrl + 'groups/' + userData.id;
 
     return this.http.get(getUserGroupUrl).toPromise()
       .then((response) => {
@@ -55,7 +54,7 @@ export class GroupManagerService {
       });
   }
 
-  findGroupById(groupId: number): Promise<Group> {
+  public findGroupById(groupId: number): Promise<Group> {
     if (!groupId) {
       return Promise.reject(new Error('No group provided'));
     }
@@ -82,7 +81,7 @@ export class GroupManagerService {
     }
   }
 
-  deleteGroup(groupId: number): Promise<boolean> {
+  public deleteGroup(groupId: number): Promise<boolean> {
     if (!groupId) {
       return Promise.reject(new Error('No group provided'));
     }
@@ -104,7 +103,7 @@ export class GroupManagerService {
       });
   }
 
-  addGroup(groupData: Group): Promise<boolean> {
+  public addGroup(groupData: Group): Promise<boolean> {
     const addGroupUrl = this.APIUrl + 'group';
 
     const requestData = {
@@ -125,7 +124,7 @@ export class GroupManagerService {
       });
   }
 
-  editGroup(groupData: Group): Promise<boolean> {
+  public editGroup(groupData: Group): Promise<boolean> {
 
     if (!groupData || !groupData.id) {
       return Promise.reject(new Error('No group provided'));

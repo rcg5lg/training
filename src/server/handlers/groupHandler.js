@@ -44,9 +44,9 @@ var groupHandler = new function () {
 	}
 
 	this.getGroupsForUser = function (req, body, res) {
-		const token = req.url.replace(/^\/api\/groups\//, "");
+		const userId = +req.url.replace(/^\/api\/groups\//, "");
 
-		console.log('-- token =||' + token + '||');
+		console.log('-- id =||' + userId + '||');
 		console.log("--------------");
 		res.writeHead(200, {
 			'Content-Type': 'text/json',
@@ -55,10 +55,10 @@ var groupHandler = new function () {
 			'Access-Control-Allow-Headers': 'Content-Type'
 		});
 		let items = [
-			{ id: 1, name: "name_1", owner: "member1", ownerToken: "member1_token", description: "group 1 description", members: ['member1'] },
-			{ id: 2, name: "name_2", owner: "member1", ownerToken: "member1_token", description: "group 2 description", members: ['member1', 'member2'] },
-			{ id: 3, name: "name_3", owner: "member2", ownerToken: "member2_token", description: "group 3 description", members: ['member1', 'member2', 'member3'] },
-			{ id: 4, name: "name_4", owner: "member1", ownerToken: "member1_token", description: "group 4 description", members: ['member1', 'member2', 'member3', 'member4'] }
+			{ id: 1, name: "name_1", owner: 1, description: "group 1 description", members: ['member1'] },
+			{ id: 2, name: "name_2", owner: 1, description: "group 2 description", members: ['member1', 'member2'] },
+			{ id: 3, name: "name_3", owner: 2, description: "group 3 description", members: ['member1', 'member2', 'member3'] },
+			{ id: 4, name: "name_4", owner: 2, description: "group 4 description", members: ['member1', 'member2', 'member3', 'member4'] }
 		];
 		let final = { 'success': true, items };
 		res.write(JSON.stringify(final));
@@ -91,7 +91,7 @@ var groupHandler = new function () {
 			'Access-Control-Allow-Methods': 'GET',
 			'Access-Control-Allow-Headers': 'Content-Type'
 		});
-		const group = { id: 5, name: "name_1", owner: "member1", ownerToken: "member1_token", description: "group 1 description", members: ['member1'] };
+		const group = { id: 5, name: "name_1", owner: 1, description: "group 1 description", members: ['member1'] };
 		let final = { 'success': true, 'group': group };
 		res.write(JSON.stringify(final));
 		res.end();
@@ -115,9 +115,8 @@ var groupHandler = new function () {
 			'id': groupId,
 			'name': body.name,
 			'owner': body.owner,
-			'ownerToken': "member1_token",
 			'description': "group 1 description",
-			members: ['member1', body.owner]
+			members: ['member1']
 		};
 		let final = { 'success': true, 'group': group };
 		res.write(JSON.stringify(final));
@@ -127,7 +126,7 @@ var groupHandler = new function () {
 	this.whitelistRegex = {
 		'GET': [
 			{ // get groups for user
-				'regex': /^\/api\/groups\/[a-zA-Z_=0-9\-_]{5,25}$/,
+				'regex': /^\/api\/groups\/\d+$/,
 				'handler': this.getGroupsForUser
 			}
 		],

@@ -31,9 +31,14 @@ export class GroupsOverviewComponent implements OnInit {
     });
 
     this.groupMgr.getGroupsForUser(this.userMgr.getLoggedUser());
-    this.userMgr.getAllUsers().then((userList: User[]) => {
-      this.userList = userList;
-    });
+    this.userMgr.getAllUsers()
+      .then((userList: User[]) => {
+        this.userList = userList;
+      })
+      .catch((err: string) => {
+        this.userList = [];
+        this.errorMessage = err;
+      });
   }
 
   reset() {
@@ -45,7 +50,7 @@ export class GroupsOverviewComponent implements OnInit {
     this.reset();
 
     this.groupMgr.deleteGroup(groupId)
-      .then((result: boolean) => {
+      .then(() => {
         this.confirmOperation = true;
         setTimeout(() => {
           this.confirmOperation = false;
@@ -70,15 +75,16 @@ export class GroupsOverviewComponent implements OnInit {
 
   addGroup() {
     this.editWindowData = new Group();
-    this.editWindowData.owner = this.userMgr.getLoggedUser().name;
+    this.editWindowData.owner = this.userMgr.getLoggedUser().id;
   }
 
   editGroup(groupId: number) {
-    this.groupMgr.findGroupById(groupId).then((groupItem: Group) => {
-      this.editWindowData = this.groupMgr.cloneGroup(groupItem);
-    }).catch((err) => {
-      alert('Group record not found');
-    });
+    this.groupMgr.findGroupById(groupId)
+      .then((groupItem: Group) => {
+        this.editWindowData = this.groupMgr.cloneGroup(groupItem);
+      }).catch((err) => {
+        alert('Group record not found');
+      });
   }
 
   resolveEdit(groupData: Group) {

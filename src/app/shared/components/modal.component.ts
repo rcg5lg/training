@@ -18,7 +18,6 @@ export class ModalComponent {
     }
 
     saveData() {
-        console.log('modal --- save window');
         this.closeEvent.emit(true);
     }
 }
