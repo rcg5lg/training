@@ -149,8 +149,6 @@ export class GroupManagerService {
           return currentGroup.id === groupData.id;
         });
 
-        console.log('--- data from request');
-        console.log(groupItem);
         this.groupList[groupIndex] = groupItem;
 
         this.updateGroupList(this.groupList);

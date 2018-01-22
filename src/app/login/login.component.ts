@@ -15,7 +15,7 @@ import { User } from '../shared/models/user';
 
 export class LoginComponent {
 
-  title= 'Please login..';
+  title= 'Please login...';
 
   username = '';
   password = '';

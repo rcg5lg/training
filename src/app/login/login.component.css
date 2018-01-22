@@ -5,6 +5,12 @@
     background-color: #f8f8f8;
 }
 
+.user-form-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .form-control, .btn, div {
     margin-top: 15px;
 }

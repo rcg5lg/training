@@ -3,6 +3,11 @@ summary {
   user-select: none;
   margin-bottom: 5px;
 }
+summary {  
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 summary .button-holder {
   float: right;
 }
@@ -13,7 +18,7 @@ details[open] {
 details[open] summary{
   border: none;
 }
-details[open] summary .summary-title {
+details[open] summary {
   font-size: 18px;
   font-weight: bold;
 }
