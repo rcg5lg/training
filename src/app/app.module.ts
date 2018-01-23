@@ -7,8 +7,11 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // directives
 import { ConfirmPasswordDirective } from './register/password-confirm.directive';
 
-// components
+// modules
 import { AppRoutingModule } from './app-routing.module';
+import { GroupsModule } from './groups/groups.module';
+
+// components
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AppComponent } from './app.component';
@@ -22,7 +25,7 @@ import { UserWelcomeComponent } from './user-welcome/user-welcome.component';
 // services
 import { UserManagerService } from './shared/services/user-manager.service';
 import { GroupManagerService } from './shared/services/group-manager.service';
-import { GroupsModule } from './groups/groups.module';
+import { UserLoginHistoryService } from './shared/services/user-login-history.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,7 @@ import { GroupsModule } from './groups/groups.module';
     GroupsModule,
     AppRoutingModule
   ],
-  providers: [UserManagerService, GroupManagerService],
+  providers: [UserManagerService, GroupManagerService, UserLoginHistoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

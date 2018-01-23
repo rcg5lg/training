@@ -1,10 +1,12 @@
-import { Injectable, ChangeDetectorRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ApplicationRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 // models
 import { User } from '../models/user';
+
+// services
+import { UserLoginHistoryService } from './user-login-history.service';
 
 @Injectable()
 export class UserManagerService {
@@ -12,20 +14,10 @@ export class UserManagerService {
   private loggedUser: User;
   public loggedUser$: BehaviorSubject<User>;
 
-  private APIUrl = 'http://localhost:81/api/';
+  public APIUrl = 'http://localhost:81/api/';
 
-  private LocalStorage_UserKey = 'jorj-training-userDetails';
-
-  constructor(private http: HttpClient) {
-    this.loggedUser = null;
-
-    const storedUser = localStorage.getItem(this.LocalStorage_UserKey);
-    if (storedUser !== '') {
-      this.loggedUser = JSON.parse(storedUser) as User;
-    } else {
-      localStorage.removeItem(this.LocalStorage_UserKey);
-    }
-
+  constructor(private http: HttpClient, private userLoginHistoryMgr: UserLoginHistoryService) {
+    this.loggedUser = userLoginHistoryMgr.getUserFromHistory();
     this.loggedUser$ = new BehaviorSubject(this.loggedUser);
   }
 
@@ -38,7 +30,7 @@ export class UserManagerService {
   }
 
   public updateLoggedUser(newUser: User): void {
-    localStorage.setItem(this.LocalStorage_UserKey, newUser ? (JSON.stringify(newUser)) : '');
+    this.userLoginHistoryMgr.updateUserHistory(newUser);
 
     this.loggedUser = newUser;
     this.loggedUser$.next(this.loggedUser);

@@ -7,11 +7,15 @@ import { FormsModule } from '@angular/forms';
 
 // stubs
 import { RouterLinkStubDirective, RouterOutletStubComponent, RouterStub } from '../../test-stubs/router-stubs';
+import { UserLoginHistoryServiceStub } from '../../test-stubs/service-stubs';
 
 // components
 import { LoginComponent } from './login.component';
 import { UserManagerService } from '../shared/services/user-manager.service';
 import { User } from '../shared/models/user';
+
+// services
+import { UserLoginHistoryService } from '../shared/services/user-login-history.service';
 
 describe('Login Component', () => {
   let component: LoginComponent;
@@ -32,7 +36,8 @@ describe('Login Component', () => {
       ],
       providers: [
         UserManagerService,
-        { provide: Router, useClass: RouterStub }
+        { provide: Router, useClass: RouterStub },
+        { provide: UserLoginHistoryService, useClass: UserLoginHistoryServiceStub }
       ]
     }).compileComponents();
   }));
