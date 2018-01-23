@@ -1,6 +1,9 @@
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 // stubs
 import { RouterLinkStubDirective, RouterOutletStubComponent, RouterStub } from '../../test-stubs/router-stubs';
@@ -8,11 +11,7 @@ import { RouterLinkStubDirective, RouterOutletStubComponent, RouterStub } from '
 // components
 import { LoginComponent } from './login.component';
 import { UserManagerService } from '../shared/services/user-manager.service';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { digest } from '@angular/compiler/src/i18n/serializers/xmb';
 import { User } from '../shared/models/user';
-import { HttpClientModule } from '@angular/common/http';
 
 describe('Login Component', () => {
   let component: LoginComponent;
@@ -40,13 +39,11 @@ describe('Login Component', () => {
 
   beforeEach(async(() => {
     fixture = TestBed.createComponent(LoginComponent);
-    fixture.whenStable().then(() => {
-      component = fixture.componentInstance;
-      rootDE = fixture.debugElement;
-      formInputs = rootDE.queryAll(By.css('input'));
-      loginBtn = rootDE.query(By.css('button')).nativeElement;
-      fixture.detectChanges();
-    });
+    component = fixture.componentInstance;
+    rootDE = fixture.debugElement;
+    formInputs = rootDE.queryAll(By.css('input'));
+    loginBtn = rootDE.query(By.css('button')).nativeElement;
+    fixture.detectChanges();
   }));
 
   it('-- component creation', () => {
