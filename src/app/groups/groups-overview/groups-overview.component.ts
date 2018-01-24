@@ -96,9 +96,15 @@ export class GroupsOverviewComponent implements OnInit {
     this.editWindowData = null;
     if (groupData !== null) {
       if (!groupData.id) {
-        this.groupMgr.addGroup(groupData);
+        this.groupMgr.addGroup(groupData)
+          .catch((err) => {
+            this.errorMessage = err.message;
+          });
       } else {
-        this.groupMgr.editGroup(groupData);
+        this.groupMgr.editGroup(groupData)
+          .catch((err) => {
+            this.errorMessage = err.message;
+          });
       }
     }
   }
