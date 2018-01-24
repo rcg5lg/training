@@ -50,7 +50,7 @@ export class UserManagerService {
     return this.http.post(checkLoginUrl, requestData).toPromise()
       .then((response) => {
         if (response['success'] === false) {
-          throw Error('Invalid credentials');
+          throw new Error('Invalid credentials');
         }
 
         const userData: User = response['user'];
@@ -60,7 +60,7 @@ export class UserManagerService {
       });
   }
 
-  public doUserLogout(): Promise<void | boolean> {
+  public doUserLogout(): Promise<boolean> {
     if (!this.loggedUser) {
       return Promise.reject(new Error('No user logged in'));
     }
@@ -73,7 +73,7 @@ export class UserManagerService {
     return this.http.post(logoutUrl, requestData).toPromise()
       .then((response) => {
         if (response['success'] === false) {
-          throw Error('Invalid token');
+          throw new Error('Invalid token');
         }
 
         this.updateLoggedUser(null);
