@@ -26,18 +26,23 @@ export class GroupsOverviewComponent implements OnInit {
   constructor(private userMgr: UserManagerService, private groupMgr: GroupManagerService) { }
 
   ngOnInit() {
-    this.groupMgr.groupList$.subscribe((groupList: Group[]) => {
-      this.groupList = groupList;
+    this.groupMgr.groupList$.subscribe(
+      (groupList: Group[]) => {
+        this.groupList = groupList;
+      });
+
+    this.groupMgr.getGroupsForUser(this.userMgr.getLoggedUser()).catch((err) => {
+      this.groupList = [];
+      this.errorMessage = err.message;
     });
 
-    this.groupMgr.getGroupsForUser(this.userMgr.getLoggedUser());
     this.userMgr.getAllUsers()
       .then((userList: User[]) => {
         this.userList = userList;
       })
-      .catch((err: string) => {
+      .catch((err) => {
         this.userList = [];
-        this.errorMessage = err;
+        this.errorMessage = err.message;
       });
   }
 
