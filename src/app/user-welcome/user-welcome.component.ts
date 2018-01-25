@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 // services
 import { UserManagerService } from '../shared/services/user-manager.service';
@@ -16,7 +15,7 @@ export class UserWelcomeComponent implements OnInit {
 
   loggedUser: User;
 
-  constructor(private userMgr: UserManagerService, private router: Router) { }
+  constructor(private userMgr: UserManagerService) { }
 
   ngOnInit() {
     this.loggedUser = null;
