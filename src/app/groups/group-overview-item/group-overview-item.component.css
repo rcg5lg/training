@@ -8,6 +8,11 @@ summary {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+summary .summary-title {
+  display: inline-flex;
+  vertical-align: middle;
+  line-height: 26px;
+}
 summary .button-holder {
   float: right;
 }
