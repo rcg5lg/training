@@ -1,0 +1,8 @@
+<div class="item-container">
+    <span class='item-name'> {{ this.itemData.name }} <span *ngIf='this.isOwner'>(*owner)</span> </span>
+    <div *ngIf="!this.isOwner" class="item-button-holder">
+        <button class="item-button-delete" (click)="this.deleteHandler($event);">
+            <span aria-hidden="true" class='text-danger'>&times;</span>
+        </button>
+    </div>
+</div>

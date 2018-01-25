@@ -124,17 +124,96 @@ var groupHandler = new function () {
 		res.end();
 	}
 
+	this.getGroupById = function (req, body, res) {
+		const groupId = +req.url.replace(/^\/api\/group\//, "");
+		console.log('-- groupId =||' + groupId + '||');
+		console.log("--------------");
+		res.writeHead(200, {
+			'Content-Type': 'text/json',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET',
+			'Access-Control-Allow-Headers': 'Content-Type'
+		});
+		const group = {
+			'id': groupId,
+			'name': 'name_' + groupId,
+			'owner': groupId,
+			'ownerName': 'member_' + groupId,
+			'description': "group " + groupId + " description",
+			members: [{ id: groupId, name: 'member_' + groupId }]
+		};
+		let final = { 'success': true, 'group': group };
+		res.write(JSON.stringify(final));
+		res.end();
+	}
+
+	this.getGroupMembers = function (req, body, res) {
+		const regexUrl = /^\/api\/group\/(\d+)\/members(\/)?$/;
+		const matches = regexUrl.exec(req.url);
+		const groupId = +matches[1];
+
+		console.log('-- groupId =||' + groupId + '||');
+		console.log("--------------");
+		res.writeHead(200, {
+			'Content-Type': 'text/json',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET',
+			'Access-Control-Allow-Headers': 'Content-Type'
+		});
+		const members = [
+			{ id: groupId, name: 'member_' + groupId },
+			{ id: (groupId + 1), name: 'member_' + (groupId + 1) }
+		];
+
+		let final = { 'success': true, 'members': members };
+		res.write(JSON.stringify(final));
+		res.end();
+	}
+
+	this.deleteGroupMember = function (req, body, res) {
+		const regexUrl = /^\/api\/group\/(\d+)\/member\/(\d+)?$/;
+		const matches = regexUrl.exec(req.url);
+		const groupId = +matches[1];
+		const memberId = +matches[2];
+
+		console.log('-- groupId =||' + groupId + '||');
+		console.log('-- memberId =||' + memberId + '||');
+		console.log("--------------");
+		res.writeHead(200, {
+			'Content-Type': 'text/json',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET',
+			'Access-Control-Allow-Headers': 'Content-Type'
+		});
+
+		let final = { 'success': true };
+		res.write(JSON.stringify(final));
+		res.end();
+	}
+
 	this.whitelistRegex = {
 		'GET': [
 			{ // get groups for user
 				'regex': /^\/api\/groups\/\d+$/,
 				'handler': this.getGroupsForUser
+			},
+			{ // get group by id
+				'regex': /^\/api\/group\/\d+$/,
+				'handler': this.getGroupById
+			},
+			{ // get group all members for group
+				'regex': /^\/api\/group\/\d+\/members(\/)?$/,
+				'handler': this.getGroupMembers
 			}
 		],
 		'DELETE': [
 			{ // delete group by id
 				'regex': /^\/api\/group\/\d+$/,
 				'handler': this.deleteGroup
+			},
+			{ // delete the member of a group 
+				'regex': /^\/api\/group\/\d+\/member\/\d+$/,
+				'handler': this.deleteGroupMember
 			}
 		],
 		'POST': [

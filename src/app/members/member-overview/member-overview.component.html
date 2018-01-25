@@ -1,0 +1,12 @@
+<div>
+
+  <app-member-add></app-member-add>
+
+  <h4>Current members: </h4>
+  <app-member-overview-item *ngFor="let member of this.membersList" 
+    [itemData]="member" 
+    [isOwner]="member.id == this.groupData.owner" 
+    (deleteItem)="this.deleteMember($event)">
+  </app-member-overview-item>
+
+</div>

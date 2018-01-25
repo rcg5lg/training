@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 // models
 import { User } from '../models/user';
 import { Group } from '../models/group';
+import { GroupMember } from '../models/group-member';
 
 @Injectable()
 export class GroupManagerService {
@@ -59,20 +60,19 @@ export class GroupManagerService {
     });
 
     if (!cachedGroup) {
-      return Promise.reject(new Error('Group not found'));
-      // const getGroupUrl = this.APIUrl + 'groups/' + groupId;
+      const getGroupUrl = this.APIUrl + 'group/' + groupId;
 
-      // return this.http.get(getGroupUrl).toPromise()
-      //   .then((response) => {
-      //     if (response['success'] === false) {
-      //       throw Error('Could not delete ');
-      //     }
+      return this.http.get(getGroupUrl).toPromise()
+        .then((response) => {
+          if (response['success'] === false) {
+            throw Error('Could not find group');
+          }
 
-      //     const groupItem = response['group'] as Group;
-      //     return groupItem;
-      //   });
+          const groupItem = new Group(response['group']);
+          return groupItem;
+        });
     } else {
-      return Promise.resolve(cachedGroup.clone());
+      return Promise.resolve(cachedGroup);
     }
   }
 
@@ -146,6 +146,47 @@ export class GroupManagerService {
         this.groupList[groupIndex] = groupItem;
 
         this.updateGroupList(this.groupList);
+        return true;
+      });
+  }
+
+  public getGroupMembers(groupId: number): Promise<GroupMember[]> {
+    if (!groupId) {
+      return Promise.reject(new Error('No group provided'));
+    }
+
+    const getGroupMembersUrl = this.APIUrl + 'group/' + groupId + '/members';
+
+    return this.http.get(getGroupMembersUrl).toPromise()
+      .then((response) => {
+        if (response['success'] === false) {
+          throw Error('Could not add group');
+        }
+
+        const membersList: GroupMember[] = response['members'].map((rawMember) => {
+          return new GroupMember(rawMember);
+        });
+
+        return membersList;
+      });
+  }
+
+  public deleteGroupMember(groupId, memberId): Promise<boolean> {
+    if (!groupId) {
+      return Promise.reject(new Error('No group provided'));
+    }
+    if (!memberId) {
+      return Promise.reject(new Error('No member provided'));
+    }
+
+    const deleteGroupMemberUrl = this.APIUrl + 'group/' + groupId + '/member/' + memberId;
+
+    return this.http.delete(deleteGroupMemberUrl).toPromise()
+      .then((response) => {
+        if (response['success'] === false) {
+          throw Error('Could not delete member');
+        }
+
         return true;
       });
   }

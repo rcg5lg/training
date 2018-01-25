@@ -1,0 +1,14 @@
+.item-container {   
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.item-name {
+    display: inline-flex;
+    vertical-align: middle;
+    line-height: 26px;
+}
+
+.item-button-holder {
+    float: right;
+}

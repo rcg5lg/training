@@ -1,0 +1,12 @@
+.posts-overview {
+    float: left;    
+}
+
+.members-overview {
+    float: right;
+    min-width: 300px;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    padding: 20px 25px;
+}
