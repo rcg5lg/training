@@ -25,7 +25,7 @@ describe(`UserManagerService`, () => {
     it(`-- doUserLogin method - with correct data`,
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(0, 'foo');
+                const reqUser = new User({ id: 0, username: 'foo' });
                 const reqPass = 'bar';
                 const reqUrl = service.APIUrl + 'users/check_login';
 
@@ -59,7 +59,7 @@ describe(`UserManagerService`, () => {
     it(`-- doUserLogin method - with invalid response from server - server returns sucess->false`,
         async(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo');
+                const reqUser = new User({ id: 1, username: 'foo' });
                 const reqPass = 'bar';
                 const reqUrl = service.APIUrl + 'users/check_login';
 
@@ -80,7 +80,7 @@ describe(`UserManagerService`, () => {
     it(`-- doUserLogin method - server request error`,
         async(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo');
+                const reqUser = new User({ id: 1, username: 'foo' });
                 const reqPass = 'bar';
                 const reqUrl = service.APIUrl + 'users/check_login';
 
@@ -112,7 +112,7 @@ describe(`UserManagerService`, () => {
     it('-- doUserLogout -- perform logout for a logged user - request success',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqUrl = service.APIUrl + 'users/logout';
 
                 service.updateLoggedUser(reqUser);
@@ -142,7 +142,7 @@ describe(`UserManagerService`, () => {
     it('-- doUserLogout -- perform logout for a logged user - request returns success->false',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqUrl = service.APIUrl + 'users/logout';
 
                 service.updateLoggedUser(reqUser);
@@ -171,7 +171,7 @@ describe(`UserManagerService`, () => {
     it('-- doUserLogout -- perform logout for a logged user - request returns success->false',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqUrl = service.APIUrl + 'users/logout';
 
                 service.updateLoggedUser(reqUser);
@@ -200,7 +200,7 @@ describe(`UserManagerService`, () => {
     it('-- doUserLogout -- perform logout for a logged user - server request error',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqUrl = service.APIUrl + 'users/logout';
 
                 service.updateLoggedUser(reqUser);
@@ -229,7 +229,7 @@ describe(`UserManagerService`, () => {
     it('-- registerUser -- register a user - request success',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqPass = 'foobar';
                 const reqUrl = service.APIUrl + 'users';
 
@@ -265,7 +265,7 @@ describe(`UserManagerService`, () => {
     it('-- registerUser -- register a user - request returns success->false',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqPass = 'foobar';
                 const reqUrl = service.APIUrl + 'users';
 
@@ -295,7 +295,7 @@ describe(`UserManagerService`, () => {
     it('-- registerUser -- register a user - server request error',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqPass = 'foobar';
                 const reqUrl = service.APIUrl + 'users';
 
@@ -325,7 +325,7 @@ describe(`UserManagerService`, () => {
     it('-- deleteUser -- delete an logged in user - request success',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqPass = 'foobar';
                 const reqUrl = service.APIUrl + 'users/' + reqUser.id;
 
@@ -360,7 +360,7 @@ describe(`UserManagerService`, () => {
     it('-- deleteUser -- delete an logged in user - request returns success->false',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqPass = 'foobar';
                 const reqUrl = service.APIUrl + 'users/' + reqUser.id;
 
@@ -392,7 +392,7 @@ describe(`UserManagerService`, () => {
     it('-- deleteUser -- delete an logged in user - server request error',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqPass = 'foobar';
                 const reqUrl = service.APIUrl + 'users/' + reqUser.id;
 
@@ -424,7 +424,7 @@ describe(`UserManagerService`, () => {
     it('-- update User -- when calling without userData, throw error',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
                 const reqUrl = service.APIUrl + 'users';
 
                 service.updateLoggedUser(reqUser);
@@ -446,8 +446,9 @@ describe(`UserManagerService`, () => {
     it('-- update User -- update the currently logged in user - request success',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
-                const reqUserModified = new User(reqUser.id, reqUser.username + '1', reqUser.token);
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
+                const reqUserModified = reqUser.clone();
+                reqUserModified.username += '1';
                 const reqUrl = service.APIUrl + 'users/' + reqUser.id;
 
                 service.updateLoggedUser(reqUser);
@@ -484,8 +485,9 @@ describe(`UserManagerService`, () => {
     it('-- update User -- update the currently logged in user - request success->false ',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
-                const reqUserModified = new User(reqUser.id, reqUser.username + '1', reqUser.token);
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
+                const reqUserModified = reqUser.clone();
+                reqUserModified.username += '1';
                 const reqUrl = service.APIUrl + 'users/' + reqUser.id;
 
                 service.updateLoggedUser(reqUser);
@@ -518,8 +520,9 @@ describe(`UserManagerService`, () => {
     it('-- update User -- update the currently logged in user - server request error ',
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
-                const reqUser = new User(1, 'foo', 'bar');
-                const reqUserModified = new User(reqUser.id, reqUser.username + '1', reqUser.token);
+                const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
+                const reqUserModified = reqUser.clone();
+                reqUserModified.username += '1';
                 const reqUrl = service.APIUrl + 'users/' + reqUser.id;
 
                 service.updateLoggedUser(reqUser);
@@ -553,10 +556,10 @@ describe(`UserManagerService`, () => {
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
                 const userList: User[] = [
-                    new User(1, 'foo_1', 'bar_1'),
-                    new User(2, 'foo_2', 'bar_2'),
-                    new User(3, 'foo_3', 'bar_3'),
-                    new User(4, 'foo_4', 'bar_4'),
+                    new User({ id: 1, username: 'foo_1', token: 'bar_1' }),
+                    new User({ id: 2, username: 'foo_2', token: 'bar_2' }),
+                    new User({ id: 3, username: 'foo_3', token: 'bar_3' }),
+                    new User({ id: 4, username: 'foo_4', token: 'bar_4' }),
                 ];
                 const reqUrl = service.APIUrl + 'users/';
 
