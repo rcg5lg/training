@@ -12,7 +12,7 @@ export class UserLoginHistoryService {
         let loggedUser = null;
 
         if (storedUser !== '') {
-            loggedUser = JSON.parse(storedUser) as User;
+            loggedUser = new User(JSON.parse(storedUser));
         } else {
             localStorage.removeItem(this.LocalStorage_UserKey);
         }

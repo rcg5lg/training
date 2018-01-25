@@ -1,16 +1,15 @@
 export class User {
-    constructor(id = 0, username = '', token = '', name = '', email = '', description = '', avatarUrl = '', age = 0,
-        currentProject = '', agency = '') {
-        this.id = id;
-        this.username = username;
-        this.token = token;
-        this.name = name;
-        this.email = email;
-        this.description = description;
-        this.avatarUrl = avatarUrl;
-        this.age = age;
-        this.currentProject = currentProject;
-        this.agency = agency;
+    constructor(rawData: Object = {}) {
+        this.id = rawData['id'] || 0;
+        this.username = rawData['username'] || '';
+        this.token = rawData['token'] || '';
+        this.name = rawData['name'] || '';
+        this.email = rawData['email'] || '';
+        this.description = rawData['description'] || '';
+        this.avatarUrl = rawData['avatarUrl'] || '';
+        this.age = rawData['age'] || 0;
+        this.currentProject = rawData['currentProject'] || '';
+        this.agency = rawData['agency'] || '';
     }
 
     id: number;
@@ -22,5 +21,10 @@ export class User {
     avatarUrl: string;
     age: number;
     currentProject: string;
-    agency: String;
+    agency: string;
+
+    clone(): User {
+        return new User(JSON.parse(JSON.stringify(this)));
+    }
+
 }

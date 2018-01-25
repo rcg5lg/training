@@ -55,17 +55,17 @@ var groupHandler = new function () {
 			'Access-Control-Allow-Headers': 'Content-Type'
 		});
 		let items = [
-			{ id: 1, name: "name_1", owner: 1, description: "group 1 description", members: ['member1'] },
-			{ id: 2, name: "name_2", owner: 1, description: "group 2 description", members: ['member1', 'member2'] },
-			{ id: 3, name: "name_3", owner: 2, description: "group 3 description", members: ['member1', 'member2', 'member3'] },
-			{ id: 4, name: "name_4", owner: 2, description: "group 4 description", members: ['member1', 'member2', 'member3', 'member4'] }
+			{ id: 1, name: "name_1", owner: 1, ownerName: 'member1', description: "group 1 description", members: [{ id: 1, name: 'member1' }] },
+			{ id: 2, name: "name_2", owner: 1, ownerName: 'member1', description: "group 2 description", members: [{ id: 1, name: 'member1' }, { id: 2, name: 'member2' }] },
+			{ id: 3, name: "name_3", owner: 2, ownerName: 'member2', description: "group 3 description", members: [{ id: 1, name: 'member1' }, { id: 2, name: 'member2' }, { id: 3, name: 'member3' }] },
+			{ id: 4, name: "name_4", owner: 2, ownerName: 'member2', description: "group 4 description", members: [{ id: 1, name: 'member1' }, { id: 2, name: 'member2' }, { id: 3, name: 'member3' }, { id: 4, name: 'member4' }] }
 		];
 		let final = { 'success': true, items };
 		res.write(JSON.stringify(final));
 		res.end();
 	}
 
-	this.deleteGroup = function(req, body, res) {
+	this.deleteGroup = function (req, body, res) {
 		const groupId = +req.url.replace(/^\/api\/group\//, "");
 
 		console.log('-- groupId =||' + groupId + '||');
@@ -91,7 +91,7 @@ var groupHandler = new function () {
 			'Access-Control-Allow-Methods': 'GET',
 			'Access-Control-Allow-Headers': 'Content-Type'
 		});
-		const group = { id: 5, name: "name_1", owner: 1, description: "group 1 description", members: ['member1'] };
+		const group = { id: 5, name: "name_1", owner: 1, ownerName: 'member1', description: "group 1 description", members: [{ id: 1, name: 'member1' }] };
 		let final = { 'success': true, 'group': group };
 		res.write(JSON.stringify(final));
 		res.end();
@@ -115,8 +115,9 @@ var groupHandler = new function () {
 			'id': groupId,
 			'name': body.name,
 			'owner': body.owner,
+			'ownerName': 'member1',
 			'description': "group 1 description",
-			members: ['member1']
+			members: [{ id: 1, name: 'member1' }]
 		};
 		let final = { 'success': true, 'group': group };
 		res.write(JSON.stringify(final));

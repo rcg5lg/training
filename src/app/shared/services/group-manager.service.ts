@@ -26,10 +26,6 @@ export class GroupManagerService {
     this.groupList$.next(this.groupList);
   }
 
-  public cloneGroup(groupItem: Group): Group {
-    return JSON.parse(JSON.stringify(groupItem));
-  }
-
   public getGroupsForUser(userData: User): Promise<boolean> {
     if (!userData) {
       return Promise.reject(new Error('No credentials provided'));
@@ -44,9 +40,8 @@ export class GroupManagerService {
         }
 
         const rawGroupList: Group[] = response['items'];
-        const groupList = rawGroupList.map((rawGroup) => {
-          const groupItem = rawGroup as Group;
-          return groupItem;
+        const groupList = rawGroupList.map((rawGroup: Object) => {
+          return new Group(rawGroup);
         });
 
         this.updateGroupList(groupList);
@@ -77,7 +72,7 @@ export class GroupManagerService {
       //     return groupItem;
       //   });
     } else {
-      return Promise.resolve(this.cloneGroup(cachedGroup));
+      return Promise.resolve(cachedGroup.clone());
     }
   }
 
@@ -116,7 +111,7 @@ export class GroupManagerService {
           throw Error('Could not add group');
         }
 
-        const groupItem = response['group'] as Group;
+        const groupItem = new Group(response['group']);
         this.groupList.push(groupItem);
 
         this.updateGroupList(this.groupList);
@@ -143,7 +138,7 @@ export class GroupManagerService {
           throw Error('Could not add group');
         }
 
-        const groupItem = response['group'] as Group;
+        const groupItem = new Group(response['group']);
         const groupIndex = this.groupList.findIndex((currentGroup) => {
           return currentGroup.id === groupData.id;
         });

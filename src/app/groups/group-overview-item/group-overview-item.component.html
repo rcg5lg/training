@@ -23,7 +23,7 @@
       <span class="label label-default">Members: </span>
       <ul class='members-list'>
         <li *ngFor="let member of this.getVisibleMembers()">
-          {{ member | titlecase }}
+          {{ member.name | titlecase }}
         </li>
       </ul>
       <ng-container *ngIf='this.groupData.members.length > this.visibleMembersLimit'>

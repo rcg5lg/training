@@ -25,9 +25,10 @@ export class UserDetailsComponent implements OnInit {
     this.reset();
     this.userMgr.loggedUser$.subscribe((userData: User) => {
       if (!userData) {
-        userData = new User();
+        this.userData = new User();
+      } else {
+        this.userData = userData.clone();
       }
-      this.userData = userData;
     });
   }
 

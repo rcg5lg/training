@@ -86,7 +86,7 @@ export class GroupsOverviewComponent implements OnInit {
   editGroup(groupId: number) {
     this.groupMgr.findGroupById(groupId)
       .then((groupItem: Group) => {
-        this.editWindowData = this.groupMgr.cloneGroup(groupItem);
+        this.editWindowData = groupItem.clone();
       }).catch((err) => {
         alert('Group record not found');
       });
