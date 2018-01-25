@@ -12,6 +12,7 @@ import { GroupMember } from '../../shared/models/group-member';
 export class GroupOverviewItemComponent {
 
   @Input() groupData: Group;
+  @Output() openRecord: EventEmitter<number>;
   @Output() deleteRecord: EventEmitter<number>;
   @Output() editRecord: EventEmitter<number>;
 
@@ -22,6 +23,7 @@ export class GroupOverviewItemComponent {
   constructor() {
     this.editRecord = new EventEmitter<number>();
     this.deleteRecord = new EventEmitter<number>();
+    this.openRecord = new EventEmitter<number>();
   }
 
   editGroup($event) {
@@ -31,6 +33,11 @@ export class GroupOverviewItemComponent {
 
   deleteGroup($event) {
     this.deleteRecord.emit(this.groupData.id);
+    $event.preventDefault();
+  }
+
+  openGroup($event) {
+    this.openRecord.emit(this.groupData.id);
     $event.preventDefault();
   }
 

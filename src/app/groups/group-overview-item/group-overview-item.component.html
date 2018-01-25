@@ -2,12 +2,15 @@
   <summary class="well">
     <span class='summary-title'>(id: {{groupData.id}}) - {{ groupData.name }}</span>
     <span class='button-holder'>
-        <button class='' (click)="editGroup($event);">
-            <span aria-hidden="true" class='text-info'>edit</span>
-        </button>
-        <button class="" (click)="deleteGroup($event);">
-          <span aria-hidden="true" class='text-danger'>&times;</span>
-        </button>
+      <button class='' (click)="openGroup($event);">
+        <span aria-hidden="true" class='text-info'>Open</span>
+      </button>
+      <button class='' (click)="editGroup($event);">
+        <span aria-hidden="true" class='text-info'>Edit</span>
+      </button>
+      <button class="" (click)="deleteGroup($event);">
+        <span aria-hidden="true" class='text-danger'>&times;</span>
+      </button>
     </span>
   </summary>
   <div class="group-details">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 // services
 import { UserManagerService } from '../../shared/services/user-manager.service';
@@ -23,7 +24,7 @@ export class GroupsOverviewComponent implements OnInit {
 
   private editWindowData: Group = null;
 
-  constructor(private userMgr: UserManagerService, private groupMgr: GroupManagerService) { }
+  constructor(private userMgr: UserManagerService, private groupMgr: GroupManagerService, private router: Router) { }
 
   ngOnInit() {
     this.groupMgr.groupList$.subscribe(
@@ -107,5 +108,9 @@ export class GroupsOverviewComponent implements OnInit {
           });
       }
     }
+  }
+
+  openRecord(groupId: number) {
+    this.router.navigate(['/group', groupId]);
   }
 }

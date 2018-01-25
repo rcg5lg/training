@@ -15,7 +15,10 @@
   </div>
 
   <div *ngFor="let group of groupList">
-    <app-group-overview-item [groupData]="group" (deleteRecord)="handleDelete($event)" (editRecord)="editGroup($event)">
+    <app-group-overview-item [groupData]="group" 
+      (deleteRecord)="handleDelete($event)" 
+      (editRecord)="editGroup($event)" 
+      (openRecord)="openRecord($event)">
     </app-group-overview-item>
   </div>
 
