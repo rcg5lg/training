@@ -191,4 +191,28 @@ export class GroupManagerService {
       });
   }
 
+  public addGroupMember(groupId, userId): Promise<GroupMember> {
+    if (!groupId) {
+      return Promise.reject(new Error('No group provided'));
+    }
+    if (!userId) {
+      return Promise.reject(new Error('No user provided'));
+    }
+
+    const addGroupMemberUrl = this.APIUrl + 'group/' + groupId + '/member';
+    const requestData = {
+      userId
+    };
+
+    return this.http.post(addGroupMemberUrl, requestData).toPromise()
+      .then((response) => {
+        if (response['success'] === false) {
+          throw Error('Could not add member');
+        }
+
+        const newMember = new GroupMember(response['member']);
+        return newMember;
+      });
+  }
+
 }

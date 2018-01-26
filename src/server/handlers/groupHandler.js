@@ -82,7 +82,6 @@ var groupHandler = new function () {
 	}
 
 	this.addGroup = function (req, body, res) {
-
 		console.log('-- params =||' + body + '||');
 		console.log("--------------");
 		res.writeHead(200, {
@@ -98,7 +97,6 @@ var groupHandler = new function () {
 	}
 
 	this.updateGroup = function (req, body, res) {
-
 		const groupId = +req.url.replace(/^\/api\/group\//, "");
 		console.log('-- groupId =||' + groupId + '||');
 
@@ -191,6 +189,28 @@ var groupHandler = new function () {
 		res.end();
 	}
 
+	this.addGroupMember = function (req, body, res) {
+		const regexUrl = /^\/api\/group\/(\d+)\/member(\/)?$/;
+		const matches = regexUrl.exec(req.url);
+		const groupId = +matches[1];
+
+		console.log('-- params =||' + groupId + '||');
+		console.log('-- params =||' + body + '||');
+		const userId = +body.userId;
+		console.log('-- params =||' + userId + '||');
+		console.log("--------------");
+		res.writeHead(200, {
+			'Content-Type': 'text/json',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET',
+			'Access-Control-Allow-Headers': 'Content-Type'
+		});
+		const member = { id: (groupId + userId), name: 'member_'+userId };
+		let final = { 'success': true, 'member': member };
+		res.write(JSON.stringify(final));
+		res.end();
+	}
+
 	this.whitelistRegex = {
 		'GET': [
 			{ // get groups for user
@@ -220,6 +240,10 @@ var groupHandler = new function () {
 			{ // save group
 				'regex': /^\/api\/group(\/)?$/,
 				'handler': this.addGroup
+			},
+			{ // save group member
+				'regex': /^\/api\/group\/\d+\/member(\/)?$/,
+				'handler': this.addGroupMember
 			}
 		],
 		'PUT': [

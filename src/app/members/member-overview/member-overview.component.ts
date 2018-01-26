@@ -14,6 +14,7 @@ export class MemberOverviewComponent implements OnInit {
 
   membersList: GroupMember[] = [];
   groupData: Group;
+  errorMessage: string;
 
   constructor(private groupMgr: GroupManagerService) { }
 
@@ -35,6 +36,15 @@ export class MemberOverviewComponent implements OnInit {
       });
   }
 
+  addUserAsMember(userId: number): void {
+    this.groupMgr.addGroupMember(this.groupId, userId)
+      .then((newMember: GroupMember) => {
+        this.membersList.push(newMember);
+      }).catch((err) => {
+        this.errorMessage = 'Could not add group member -- ' + err.message;
+      });
+  }
+
   deleteMember(memberId: number): void {
     this.groupMgr.deleteGroupMember(this.groupId, memberId)
       .then((result) => {
@@ -43,7 +53,7 @@ export class MemberOverviewComponent implements OnInit {
         });
       })
       .catch((err) => {
-        alert('--- Delete group member ' + err.message);
+        this.errorMessage = '--- Delete group member ' + err.message;
       });
   }
 

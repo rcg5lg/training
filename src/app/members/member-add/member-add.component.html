@@ -1,3 +1,15 @@
-<p>
-  members-add works!
-</p>
+<div>
+  <input placeholder="Search by username..." [formControl]="searchField" 
+    (focus)='this.showUserList($event, true)' 
+    (blur)='this.showUserList($event, false)' />
+  <div class='member-autocomplete-list_holder' *ngIf='this.showList'>
+    <div *ngIf='this.usersLoading'>
+      Loading users..
+    </div>
+    <ul *ngIf='!this.usersLoading' class='member-autocomplete-list'>
+      <li class='member-autocomplete-item' 
+        *ngFor="let user of this.searchUserList | async"
+        (click)="this.addAsMember(user.id);"> {{ user.username }} </li>
+    </ul>
+  </div>
+</div>

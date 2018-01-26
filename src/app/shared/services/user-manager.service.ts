@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpUrlEncodingCodec } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/map';
 
 // models
 import { User } from '../models/user';
 
 // services
 import { UserLoginHistoryService } from './user-login-history.service';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserManagerService {
@@ -153,5 +155,24 @@ export class UserManagerService {
         const userList: User[] = response['users'];
         return userList;
       });
+  }
+
+  public getAllUsersBySearchTerm(searchTerm: string): Observable<User[]> {
+
+    const urlEncoder = new HttpUrlEncodingCodec();
+    const getUsersUrl = this.APIUrl + 'users/search/' + urlEncoder.encodeValue(searchTerm);
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.get(getUsersUrl, httpOptions).map(res => {
+      if (res['success'] === false) {
+        return Observable.throw('-- eroarea mea este');
+      }
+      return res['users'].map((rawUser) => {
+        return new User(rawUser);
+      });
+    });
   }
 }
