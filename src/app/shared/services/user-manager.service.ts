@@ -158,6 +158,9 @@ export class UserManagerService {
   }
 
   public getAllUsersBySearchTerm(searchTerm: string): Observable<User[]> {
+    if (searchTerm === '') {
+      return Observable.of([]);
+    }
 
     const urlEncoder = new HttpUrlEncodingCodec();
     const getUsersUrl = this.APIUrl + 'users/search/' + urlEncoder.encodeValue(searchTerm);

@@ -33,9 +33,13 @@ export class MemberAddComponent implements OnInit {
 
   createSearchHandler(): void {
     this.initSearchHandler().subscribe(
-      (data) => { this.searchUserList = Observable.of(data); },
-      (error) => { console.log(error.message); this.createSearchHandler(); },
-      () => { console.log('--- on complet'); },
+      (data) => {
+        this.searchUserList = Observable.of(data);
+      },
+      (error) => {
+        alert('error here');
+        this.createSearchHandler();
+      }
     ); // Need to call subscribe to make it hot!
   }
 
@@ -60,8 +64,7 @@ export class MemberAddComponent implements OnInit {
   handleKeyEvent(event): void {
     switch (event.keyCode) {
       case 27: { // escape press
-        // this.clearInput();
-        console.log('--- clear input');
+        this.clearSearchInput();
         break;
       }
       default: {
@@ -70,7 +73,12 @@ export class MemberAddComponent implements OnInit {
     }
   }
 
-  showUserList(showList: boolean) {
+  clearSearchInput(): void {
+    this.searchField.setValue('');
+    this.showUserList(false);
+  }
+
+  showUserList(showList: boolean, $event = null) {
     this.showList = showList;
   }
 
