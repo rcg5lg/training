@@ -26,6 +26,7 @@ import { UserWelcomeComponent } from './user-welcome/user-welcome.component';
 import { UserManagerService } from './shared/services/user-manager.service';
 import { GroupManagerService } from './shared/services/group-manager.service';
 import { UserLoginHistoryService } from './shared/services/user-login-history.service';
+import { PostManagerService } from './shared/services/post-manager.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { UserLoginHistoryService } from './shared/services/user-login-history.se
     GroupsModule,
     AppRoutingModule
   ],
-  providers: [UserManagerService, GroupManagerService, UserLoginHistoryService],
+  providers: [UserManagerService, GroupManagerService, UserLoginHistoryService, PostManagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

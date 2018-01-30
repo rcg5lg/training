@@ -1,7 +1,7 @@
 var optionsHandler = require('./handlers/optionsHandler.js');
 var userHandler = require('./handlers/userHandler');
 var groupHandler = require('./handlers/groupHandler');
-// var postHandler = require('./handlers/postHandler');
+var postHandler = require('./handlers/postHandler');
 
 var HandlerChainWrapper = function(handler) {
 	this.internalHandler = handler;
@@ -30,10 +30,10 @@ var HandlerChainWrapper = function(handler) {
 var optionsChain = new HandlerChainWrapper(optionsHandler);
 var userChain = new HandlerChainWrapper(userHandler);
 var groupChain = new HandlerChainWrapper(groupHandler);
-// var postChain = new HandlerChaingWrapper(postHandler);
+var postChain = new HandlerChainWrapper(postHandler);
 
 optionsChain.addNextHandler(userChain);
 userChain.addNextHandler(groupChain);
-// groupChain.addNextHandler(postChain);
+groupChain.addNextHandler(postChain);
 
 module.exports = optionsChain;
