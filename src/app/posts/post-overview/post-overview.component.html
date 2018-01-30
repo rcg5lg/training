@@ -1,4 +1,10 @@
 <div>
-  post overview is working 
-  Will display for GroupId = {{ groupId }}
+  <app-post-list class='post-list'
+    [postsList]="this.postsList"
+    (updatePost)="this.updatePost($event)"
+    (deletePost)="this.deletePost($event)">
+  </app-post-list>
+
+  <app-post-item-add (addPost)="this.addPost($event)">
+  </app-post-item-add>
 </div>

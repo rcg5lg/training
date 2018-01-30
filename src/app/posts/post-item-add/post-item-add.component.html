@@ -1,0 +1,13 @@
+<div>
+  <app-post-item-add-form *ngIf="this.inAddMode" 
+    [postData]="this.newPostData" 
+    [forceFocus]="this.forceFocus"
+    (addRecord)="this.addRecord($event)"
+    (cancelAddRecord)="this.closeAddPost();"
+    >
+  </app-post-item-add-form>
+
+  <div *ngIf='!this.inAddMode'>
+    <button (click)="this.openAddPost();">Add</button>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class='list-holder'>
+  <h4>Posts list: </h4>
+
+  <app-post-list-item class='list-item' *ngFor="let post of this.postsList" 
+    [postData]="post" 
+    (updateRecord)="this.updateRecord($event);" 
+    (deleteRecord)="this.deleteRecord($event);">
+  </app-post-list-item>
+</div>

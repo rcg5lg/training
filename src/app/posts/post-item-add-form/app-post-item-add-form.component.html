@@ -1,0 +1,12 @@
+<form class='post-item' #editForm="ngForm" (submit)="this.saveChanges(editForm.form);">
+
+  <textarea class='post-item-message' name='message' [(ngModel)]="this.postData.message" 
+    placeholder="Enter your message here.." #messageTf>
+  </textarea>
+
+  <div class='post-item-button_holder text-right'>
+    <input type='button' class='post-item-button_reset text-danger' value='&times;' (click)="this.cancelChanges(editForm.form)"
+    />
+    <input type='submit' class='post-item-button_confirm text-success' value='&radic;'>
+  </div>
+</form>

@@ -1,0 +1,39 @@
+.post-item {
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    padding: 8px 10px 5px;
+}
+
+.post-item-button_holder {
+    margin-top: 5px;
+}
+
+.post-item-button_confirm,
+.post-item-button_edit {
+    margin-left: 5px;
+}
+
+.post-item-header {
+    margin-bottom: 10px;
+}
+
+.post-item-header span {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.post-item-message {
+    border: 1px solid #928a8a;
+    padding: 5px 10px;
+    min-height: 75px;
+    max-height: 150px;
+    min-width: 400px; 
+    max-width: 400px; 
+}
+
+.post-item-message[readonly] {
+    outline: none;
+    background-color: #f5f5f5;
+}

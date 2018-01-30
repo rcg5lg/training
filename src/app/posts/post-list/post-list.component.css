@@ -1,0 +1,6 @@
+.list-holder {
+    max-height: 700px;
+    overflow-y: auto; 
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,31 @@
+<form class='post-item' #editForm="ngForm"
+  (submit)="this.saveChanges(editForm.form);" >
+  <div class='post-item-button_holder'>
+    <div *ngIf="!this.inEditMode" >
+      <input type="button" value='&times;' class='post-item-button_delete text-danger' (click)='this.deletePost()'/>
+      <input type="button" value='Edit' class='post-item-button_edit text-primary' (click)='this.editPost()'/>
+    </div>
+    <div *ngIf="this.inEditMode">
+      <input type='button' class='post-item-button_reset text-danger' value='&times;' (click)="this.resetChanges(editForm.form)"/>
+      <input type='submit' class='post-item-button_confirm text-success' value='&radic;'>
+    </div>
+  </div>
+
+  <div class='post-item-header' *ngIf="this.displayData.changedAt">
+    By:
+    <span>{{ this.displayData.changedBy }}</span>
+    <br/> Last updated:
+    <span>{{ this.displayData.changedAt | date:'medium' }}</span>
+  </div>
+
+  <div class='post-item-header' *ngIf="!this.displayData.changedAt">
+    By:
+    <span>{{ this.displayData.createdBy }}</span>
+    <br/> Created on:
+    <span>{{this.displayData.createdAt | date:'medium' }}</span>
+  </div>
+
+  <textarea class='post-item-message' [readonly]="!this.inEditMode" name='message' [(ngModel)]="this.displayData.message">
+    {{this.displayData.message}}
+  </textarea>
+</form>
