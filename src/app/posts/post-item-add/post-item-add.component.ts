@@ -34,7 +34,6 @@ export class PostItemAddComponent implements OnInit {
   }
 
   private changeAddMode(newMode: boolean) {
-    console.log('---- change addmode ' + newMode);
     this.inAddMode = newMode;
   }
 
