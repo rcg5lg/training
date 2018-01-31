@@ -1,5 +1,8 @@
 // handle api request for users
 var usersHandler = new function () {
+	
+	this.setDbConnection = function (dbConnection) {
+	}
 
 	this.canHandleRequest = function (req) {
 		console.log('-- userHandler - canHandle ? ');
@@ -23,7 +26,7 @@ var usersHandler = new function () {
 		return false;
 	}
 
-	this.handleRequest = function(req, body, res) {
+	this.handleRequest = function (req, body, res) {
 		const reqMethod = req.method.toUpperCase();
 		const reqUrl = req.url;
 
@@ -34,8 +37,7 @@ var usersHandler = new function () {
 
 		for (let i = 0; i < handlerList.length; i++) {
 			if (handlerList[i].regex.test(reqUrl)) {
-				console.log(handlerList[i]);
-				handlerList[i].handler(req, body, res);
+				handlerList[i].handler.call(this, req, body, res);
 				return true;
 			}
 		}
@@ -83,48 +85,6 @@ var usersHandler = new function () {
 			'Content-Type': 'text/json',
 			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Methods': 'DELETE',
-			'Access-Control-Allow-Headers': 'Content-Type'
-		});
-		let final = { 'success': true };
-		res.write(JSON.stringify(final));
-		res.end();
-	}
-
-	this.loginUser = function (req, body, res) {
-		console.log('-- userHandler - loginUser ');
-
-		res.writeHead(200, {
-			'Content-Type': 'text/json',
-			'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Methods': 'POST',
-			'Access-Control-Allow-Headers': 'Content-Type'
-		});
-
-		let final = {
-			'success': true, 'user': {
-				id: 1,
-				username: 'member1',
-				token: "member1_token",
-				name: "member1",
-				email: "member1@email.test",
-				description: "description token",
-				avatarUrl: 'picture',
-				age: 22,
-				currentProject: 'member 1 project',
-				agency: 'local agency'
-			}
-		};
-		res.write(JSON.stringify(final));
-		res.end();
-	}
-
-	this.logoutUser = function (req, body, res) {
-		console.log('-- userHandler - logoutUser ');
-
-		res.writeHead(200, {
-			'Content-Type': 'text/json',
-			'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Methods': 'POST',
 			'Access-Control-Allow-Headers': 'Content-Type'
 		});
 		let final = { 'success': true };
@@ -298,14 +258,6 @@ var usersHandler = new function () {
 			}
 		],
 		'POST': [
-			{ // check if user credentials for login
-				'regex': /^\/api\/users\/check_login$/,
-				'handler': this.loginUser
-			},
-			{ // logout user
-				'regex': /^\/api\/users\/logout$/,
-				'handler': this.logoutUser
-			},
 			{ // register user
 				'regex': /^\/api\/users$/,
 				'handler': this.registerUser

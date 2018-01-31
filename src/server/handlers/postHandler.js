@@ -1,6 +1,9 @@
 // handle api request for groups
 var postHandler = new function () {
 
+	this.setDbConnection = function (dbConnection) {
+	}
+
 	this.canHandleRequest = function (req) {
 		console.log('-- postsHandler - canHandle ? ');
 

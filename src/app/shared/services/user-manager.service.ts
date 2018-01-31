@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpUrlEncodingCodec } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 
 // models
 import { User } from '../models/user';
@@ -43,7 +44,7 @@ export class UserManagerService {
       return Promise.reject(new Error('No credentials provided'));
     }
 
-    const checkLoginUrl = this.APIUrl + 'users/check_login';
+    const checkLoginUrl = this.APIUrl + 'login';
     const requestData = {
       username,
       password
@@ -55,7 +56,8 @@ export class UserManagerService {
           throw new Error('Invalid credentials');
         }
 
-        const userData: User = response['user'];
+        const userData: User = new User(response['user']);
+        userData.token = response['token'];
         this.updateLoggedUser(userData);
 
         return userData;
@@ -67,9 +69,10 @@ export class UserManagerService {
       return Promise.reject(new Error('No user logged in'));
     }
 
-    const logoutUrl = this.APIUrl + 'users/logout';
+    const logoutUrl = this.APIUrl + 'logout';
     const requestData = {
-      token: this.loggedUser.token
+      'userId': this.loggedUser.id,
+      'token': this.loggedUser.token
     };
 
     return this.http.post(logoutUrl, requestData).toPromise()

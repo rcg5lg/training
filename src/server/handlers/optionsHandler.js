@@ -1,5 +1,9 @@
 // needed to handle server discovery requests of type OPTIONS
 var optionsHandler = new function () {
+
+	this.setDbConnection = function (dbConnection) {
+	}
+	
 	this.canHandleRequest = function (req) {
 		console.log('-- optionsHandler - canHandle ? ');
 		const reqMethod = req.method.toUpperCase();

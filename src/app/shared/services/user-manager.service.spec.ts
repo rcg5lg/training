@@ -27,7 +27,7 @@ describe(`UserManagerService`, () => {
             (service: UserManagerService, backend: HttpTestingController) => {
                 const reqUser = new User({ id: 0, username: 'foo' });
                 const reqPass = 'bar';
-                const reqUrl = service.APIUrl + 'users/check_login';
+                const reqUrl = service.APIUrl + 'login';
 
                 service.doUserLogin(reqUser.username, reqPass).then((rez: User) => {
                     expect(rez.username).toBe(reqUser.username, 'Request user is not received');
@@ -61,7 +61,7 @@ describe(`UserManagerService`, () => {
             (service: UserManagerService, backend: HttpTestingController) => {
                 const reqUser = new User({ id: 1, username: 'foo' });
                 const reqPass = 'bar';
-                const reqUrl = service.APIUrl + 'users/check_login';
+                const reqUrl = service.APIUrl + 'login';
 
                 service.doUserLogin(reqUser.username, reqPass).catch((error) => {
                     expect(error.message).toContain('Invalid credentials', 'Error should be thrown when no success->false is received ');
@@ -82,7 +82,7 @@ describe(`UserManagerService`, () => {
             (service: UserManagerService, backend: HttpTestingController) => {
                 const reqUser = new User({ id: 1, username: 'foo' });
                 const reqPass = 'bar';
-                const reqUrl = service.APIUrl + 'users/check_login';
+                const reqUrl = service.APIUrl + 'login';
 
                 service.doUserLogin(reqUser.username, reqPass).catch((error) => {
                     expect(error.message).not.toContain('Invalid credentials', 'Error should be thrown when no success->false is received ');
@@ -113,7 +113,7 @@ describe(`UserManagerService`, () => {
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
                 const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
-                const reqUrl = service.APIUrl + 'users/logout';
+                const reqUrl = service.APIUrl + 'logout';
 
                 service.updateLoggedUser(reqUser);
 
@@ -143,7 +143,7 @@ describe(`UserManagerService`, () => {
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
                 const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
-                const reqUrl = service.APIUrl + 'users/logout';
+                const reqUrl = service.APIUrl + 'logout';
 
                 service.updateLoggedUser(reqUser);
 
@@ -172,7 +172,7 @@ describe(`UserManagerService`, () => {
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
                 const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
-                const reqUrl = service.APIUrl + 'users/logout';
+                const reqUrl = service.APIUrl + 'logout';
 
                 service.updateLoggedUser(reqUser);
 
@@ -201,7 +201,7 @@ describe(`UserManagerService`, () => {
         fakeAsync(inject([UserManagerService, HttpTestingController],
             (service: UserManagerService, backend: HttpTestingController) => {
                 const reqUser = new User({ id: 1, username: 'foo', token: 'bar' });
-                const reqUrl = service.APIUrl + 'users/logout';
+                const reqUrl = service.APIUrl + 'logout';
 
                 service.updateLoggedUser(reqUser);
 
