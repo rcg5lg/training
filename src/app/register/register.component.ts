@@ -18,7 +18,6 @@ export class RegisterComponent extends LoginComponent {
   doTask(): Promise<any> {
     const userData: User = new User();
     userData.username = this.username;
-    userData.name = this.username;
 
     return this.userMgr.registerUser(userData, this.password);
   }

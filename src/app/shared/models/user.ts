@@ -3,7 +3,6 @@ export class User {
         this.id = rawData['id'] || 0;
         this.username = rawData['username'] || '';
         this.token = rawData['token'] || '';
-        this.name = rawData['name'] || '';
         this.email = rawData['email'] || '';
         this.description = rawData['description'] || '';
         this.avatarUrl = rawData['avatarUrl'] || '';
@@ -15,7 +14,6 @@ export class User {
     id: number;
     username: string;
     token: string;
-    name: string;
     email: string;
     description: string;
     avatarUrl: string;

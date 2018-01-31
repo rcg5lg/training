@@ -177,7 +177,7 @@ describe('Login Component', () => {
     expect(loginBtn.getAttribute('disabled')).toBeNull('Login button should be enabled');
 
     const loggedUser = new User();
-    loggedUser.name = 'Jorj';
+    loggedUser.username = 'Jorj';
     spyOn(userMgrService, 'doUserLogin').and.returnValue(Promise.resolve(loggedUser));
 
     const spy = spyOn(fixture.debugElement.injector.get(Router), 'navigate');
@@ -187,7 +187,7 @@ describe('Login Component', () => {
     tick();
     fixture.detectChanges();
 
-    expect(component.welcomeMsg).toContain(loggedUser.name, `Welcome message for ${loggedUser.name} should be displayed`);
+    expect(component.welcomeMsg).toContain(loggedUser.username, `Welcome message for ${loggedUser.username} should be displayed`);
 
     // tick needed because redirect is performed after 700ms, so we have to wait a few before request is actually performed
     tick(1000);
@@ -215,7 +215,7 @@ describe('Login Component', () => {
     expect(loginBtn.getAttribute('disabled')).toBeNull('Login button should be enabled');
 
     const loggedUser = new User();
-    loggedUser.name = 'Jorj';
+    loggedUser.username = 'Jorj';
     const errorMsg = 'Dummy error';
     spyOn(userMgrService, 'doUserLogin').and.returnValue(Promise.reject(new Error(errorMsg)));
 

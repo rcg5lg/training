@@ -34,7 +34,7 @@ export class LoginComponent {
 
     this.doTask()
       .then((userData: User) => {
-        this.welcomeMsg = 'Hello ' + userData.name;
+        this.welcomeMsg = 'Hello ' + userData.username;
 
         setTimeout(() => {
           this.router.navigate(['/groups']);

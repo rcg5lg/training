@@ -1,7 +1,7 @@
 <ul class="nav navbar-nav navbar-right">
   <ng-container *ngIf='loggedUser'>
     <li>
-      <a routerLink="/user-details">Welcome {{ loggedUser.name }}</a>
+      <a routerLink="/user-details">Welcome {{ loggedUser.username }}</a>
     </li>
     <li>
       <a routerLink="/logout">Logout</a>
