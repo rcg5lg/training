@@ -46,12 +46,12 @@ describe('ErrorPageComponent', () => {
 
     let errorLink = errorLinks[0];
     errorOptionRouter = errorLink.injector.get(RouterLinkStubDirective);
-    expect(errorLinks[0].nativeElement.textContent).toBe('report issue', '1st link is report issue');
+    expect(errorLinks[0].nativeElement.textContent).toBe('Report issue', '1st link is report issue');
     expect(errorOptionRouter.linkParams).toBe('/home', '1st link redirects to home');
 
     errorLink = errorLinks[1];
     errorOptionRouter = errorLink.injector.get(RouterLinkStubDirective);
-    expect(errorLinks[1].nativeElement.textContent).toBe('return to home', '2st link is return to home');
+    expect(errorLinks[1].nativeElement.textContent).toBe('Return to home', '2st link is return to home');
     expect(errorOptionRouter.linkParams).toBe('/home', '2st link redirects to home');
   });
 });
