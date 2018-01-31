@@ -11,7 +11,7 @@ export class UserLoginHistoryService {
         const storedUser: string = localStorage.getItem(this.LocalStorage_UserKey);
         let loggedUser = null;
 
-        if (storedUser !== '') {
+        if (storedUser) {
             loggedUser = new User(JSON.parse(storedUser));
         } else {
             localStorage.removeItem(this.LocalStorage_UserKey);
