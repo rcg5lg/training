@@ -1,0 +1,8 @@
+.holder {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #554444;
+    margin-bottom: 10px;
+}
